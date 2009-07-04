@@ -1,0 +1,4 @@
+label_f_day: %.2f day
+label_f_day_plural: %.2f days
+label_f_week: %.2f week
+label_f_week_plural: %.2f weeks
