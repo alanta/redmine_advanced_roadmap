@@ -4,129 +4,58 @@
 <p class="nodata"><%= l(:label_no_data) %></p>
 <% else %>
 <div id="roadmap">
-<%
-  super_total_estimated = 0.0
-  super_total_spent = 0.0
-  super_total_pending = 0.0
-  super_total_ratio = 0.0
-%>
 <% @versions.each do |version| %>   
-  <%
-    issues = version.fixed_issues.find(:all,
-                                       :include => [:status, :tracker],
-                                       :conditions => ["tracker_id in (#{@selected_tracker_ids.join(',')})"],
-                                       :order => "#{Tracker.table_name}.position, #{Issue.table_name}.id") unless @selected_tracker_ids.empty?
-    issues ||= []
-    text = ""
-    total_estimated = 0.0
-    total_spent = 0.0
-    total_pending = 0.0
-    total_ratio = 0.0
-    if issues.size > 0
-      text += "<fieldset class=\"related-issues\"><legend>#{l(:label_related_issues)}</legend>\n" +
-              "<table class=\"list\">\n" +
-              "   <thead>\n" +
-              "      <th width=\"20%\" align=\"left\">#{l(:field_issue)}</th>\n" +
-              "      <th width=\"44%\" align=\"left\">#{l(:field_description)}</th>\n" +
-              "      <th width=\"9%\" align=\"center\">#{l(:field_estimated_hours)}</th>" +
-              "      <th width=\"9%\" align=\"center\">#{l(:label_spent_time)}</th>" +
-              "      <th width=\"9%\" align=\"center\">#{l(:field_done_ratio)}</th>" +
-              "      <th width=\"9%\" align=\"center\">#{l(:label_roadmap_due_in, "")}</th>" +
-              "   </thead>\n" +
-              "   <tbody>\n"
-      issues.each do |issue|
-        color = ""
-        begin_strike = ""
-        end_strike = ""
-        if issue.estimated_hours && issue.done_ratio
-          ratio = issue.spent_hours / ((issue.estimated_hours * issue.done_ratio) / 100.0)
-          if ratio < 0.5
-            color = "green"
-          end
-          if ratio > 1.0
-            color = "orange"        
-          end
-          if ratio > 1.5
-            color = "red"
-          end
-        end
-        if issue.closed?
-          begin_strike = "<strike>"
-          end_strike = "</strike>"
-        end
-        text += "      <tr class=\"#{cycle("odd", "even")}\">\n" +
-                "         <td align=\"left\">#{link_to_issue(issue)}</td>\n" +
-                "         <td align=\"left\"><font color=\"#{color}\">#{begin_strike}#{h(issue.subject)}#{end_strike}</font></td>\n" +
-                "         <td align=\"center\"><font color=\"#{color}\">#{begin_strike}#{("%.2f" % issue.estimated_hours) if issue.estimated_hours}#{end_strike}</font></td>\n" +
-                "         <td align=\"center\"><font color=\"#{color}\">#{begin_strike}#{"%.2f" % issue.spent_hours}#{end_strike}</font></td>\n" +
-                "         <td align=\"center\"><font color=\"#{color}\">#{begin_strike}#{(("%.0f" % issue.done_ratio) + "%") if issue.estimated_hours}#{end_strike}</font></td>\n" +
-                "         <td align=\"center\"><font color=\"#{color}\">#{begin_strike}#{("%.2f" % issue.rest_hours) if issue.estimated_hours}#{end_strike}</font></td>\n" +
-                "      </tr>\n"
-        total_estimated += issue.estimated_hours ? issue.estimated_hours : 0.0
-        total_spent += issue.spent_hours ? issue.spent_hours : 0.0
-        total_pending += issue.rest_hours ? issue.rest_hours : 0.0
-        if issue.spent_hours && issue.rest_hours
-          total_ratio += (issue.spent_hours + issue.rest_hours) * issue.done_ratio
-          super_total_ratio += (issue.spent_hours + issue.rest_hours) * issue.done_ratio
-        end
-      end
-      if total_spent + total_pending > 0.0
-        total_ratio /= (total_spent + total_pending)
-      else
-        total_ratio = 0.0        
-      end
-      text += "      <tr class=\"#{cycle("odd", "even")}\">\n" +
-              "         <td align=\"left\"></td>\n" +
-              "         <td align=\"left\"><b>#{l(:label_total)}</b></td>\n" +
-              "         <td align=\"center\"><b>#{("%.2f" % total_estimated)}</b></td>\n" +
-              "         <td align=\"center\"><b>#{("%.2f" % total_spent)}</b></td>\n" +
-              "         <td align=\"center\"><b>#{("%.0f" % total_ratio)}%</b></td>\n" +
-              "         <td align=\"center\"><b>#{("%.2f" % total_pending)}</b></td>\n" +
-              "      </tr>\n"
-      text += "   </tbody>\n" +
-              "</table>\n" +
-              "</fieldset>\n"
-      super_total_estimated += total_estimated ? total_estimated : 0.0
-      super_total_spent += total_spent ? total_spent : 0.0
-      super_total_pending += total_pending ? total_pending : 0.0
-    end 
-  %>
+  <% issues = version.fixed_issues.find(:all,
+                                        :include => [:status, :tracker],
+                                        :conditions => ["tracker_id in (#{@selected_tracker_ids.join(',')})"],
+                                        :order => "#{Tracker.table_name}.position, #{Issue.table_name}.id") unless @selected_tracker_ids.empty? %>
   <%= tag 'a', :name => version.name %>
   <h3 class="icon22 icon22-package"><%= link_to h(version.name), :controller => 'versions', :action => 'show', :id => version %></h3>
   <%= render :partial => 'versions/overview', :locals => {:version => version} %>
   <%= render(:partial => "wiki/content", :locals => {:content => version.wiki_page.content}) if version.wiki_page %>
-
-  <%= text %>
-<%
-end
-if super_total_spent + super_total_pending > 0.0
-  super_total_ratio /= (super_total_spent + super_total_pending)
-else
-  super_total_ratio = 0.0        
-end
-%>
+  <%= render :partial => 'versions/issues', :locals => {:version => version, :issues => issues} %>
+<% end %>
 
 <% if @versions.size > 1 %>
   <h3 class="icon22 icon22-package"><%= l(:label_total) %></h3>
-  <%= progress_bar([super_total_ratio, super_total_ratio], :width => '40em', :legend => ('%0.0f%' % super_total_ratio)) %>
+  <%
+    estimated_hours = 0.0
+    spent_hours = 0.0
+    rest_hours = 0.0
+    completed_pourcent = 0.0
+    closed_pourcent = 0.0
+  	@versions.each do |version|
+  	  estimated_hours += version.estimated_hours
+      spent_hours += version.spent_hours
+      rest_hours += version.rest_hours
+      completed_pourcent += version.spent_hours
+      closed_pourcent += version.closed_spent_hours
+  	end
+  	total = spent_hours + rest_hours
+  	if total > 0.0
+      completed_pourcent = (completed_pourcent * 100.0) / total
+      closed_pourcent = (closed_pourcent * 100.0) / total
+  	end
+  %>
+  <%= progress_bar([closed_pourcent, completed_pourcent], :width => '40em', :legend => ('%0.0f%' % completed_pourcent)) %>
   <fieldset><legend><%= l(:label_time_tracking) %></legend>
   <table>
   <tr>
     <td width="130px" align="right"><%= l(:field_estimated_hours) %></td>
-    <td width="340px" class="total-hours"><%= html_hours(lwr(:label_f_hour, super_total_estimated)) %></td>
+    <td width="340px" class="total-hours"><%= html_hours(lwr(:label_f_hour, estimated_hours)) %></td>
   </tr>
   <% if User.current.allowed_to?(:view_time_entries, @project) %>
     <tr>
       <td width="130px" align="right"><%= l(:label_spent_time) %></td>
-      <td width="340px" class="total-hours"><%= html_hours(lwr(:label_f_hour, super_total_spent)) %></td>
+      <td width="340px" class="total-hours"><%= html_hours(lwr(:label_f_hour, spent_hours)) %></td>
     </tr>
     <tr>
       <td width="130px" align="right"><%= l(:field_done_ratio) %></td>
-      <td width="340px" class="total-hours"><big><%= "%.0f" % super_total_ratio %></big>%</td>
+      <td width="340px" class="total-hours"><big><%= "%.0f" % completed_pourcent %></big>%</td>
     </tr>
     <tr>
       <td width="130px" align="right"><%= l(:label_roadmap_due_in, "") %></td>
-      <td width="340px" class="total-hours"><%= "#{html_hours(lwr(:label_f_hour, super_total_pending))} / #{html_hours(lwr(:label_f_day, super_total_pending / 8.0))} / #{html_hours(lwr(:label_f_week, super_total_pending / 40.0))}" %></td>
+      <td width="340px" class="total-hours"><%= "#{html_hours(lwr(:label_f_hour, rest_hours))} / #{html_hours(lwr(:label_f_day, rest_hours / 8.0))} / #{html_hours(lwr(:label_f_week, rest_hours / 40.0))}" %></td>
     </tr>
   <% end %>
   </table>
