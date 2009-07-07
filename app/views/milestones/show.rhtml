@@ -1,0 +1,68 @@
+<div class="contextual">
+<%= link_to_if_authorized l(:button_edit), {:controller => :milestones, :action => :edit, :id => @milestone.id}, :class => 'icon icon-edit' %>
+</div>
+
+<h2><%= h(@milestone.name) %></h2>
+
+<p><%=h @milestone.description %></p>
+
+<% if @milestone.versions.empty? %>
+  <p class="nodata"><%= l(:label_no_data) %></p>
+<% else %>
+  <div id="roadmap">
+    <% @milestone.versions.each do |version| %>   
+      <% issues = version.fixed_issues.find(:all,
+                                            :include => [:status, :tracker],
+                                            :order => "#{Tracker.table_name}.position, #{Issue.table_name}.id") %>
+      <%= tag 'a', :name => version.name %>
+      <h3 class="icon22 icon22-package"><%= link_to h(version.name), :controller => 'versions', :action => 'show', :id => version %></h3>
+      <%= render :partial => 'versions/overview', :locals => {:version => version} %>
+      <%= render(:partial => "wiki/content", :locals => {:content => version.wiki_page.content}) if version.wiki_page %>
+      <%= render :partial => 'versions/issues', :locals => {:version => version, :issues => issues} %>
+    <% end %>
+
+    <h3 class="icon22 icon22-package"><%= l(:label_total) %></h3>
+    <%
+      estimated_hours = 0.0
+      spent_hours = 0.0
+      rest_hours = 0.0
+      completed_pourcent = 0.0
+      closed_pourcent = 0.0
+  	  @milestone.versions.each do |version|
+    	  estimated_hours += version.estimated_hours
+        spent_hours += version.spent_hours
+        rest_hours += version.rest_hours
+        completed_pourcent += version.spent_hours
+        closed_pourcent += version.closed_spent_hours
+    	end
+  	  total = spent_hours + rest_hours
+      if total > 0.0
+        completed_pourcent = (completed_pourcent * 100.0) / total
+        closed_pourcent = (closed_pourcent * 100.0) / total
+  	  end
+    %>
+    <%= progress_bar([closed_pourcent, completed_pourcent], :width => '40em', :legend => ('%0.0f%' % completed_pourcent)) %>
+    <fieldset><legend><%= l(:label_time_tracking) %></legend>
+    <table>
+    <tr>
+      <td width="130px" align="right"><%= l(:field_estimated_hours) %></td>
+      <td width="340px" class="total-hours"><%= html_hours(lwr(:label_f_hour, estimated_hours)) %></td>
+    </tr>
+    <% if User.current.allowed_to?(:view_time_entries, @project) %>
+      <tr>
+        <td width="130px" align="right"><%= l(:label_spent_time) %></td>
+        <td width="340px" class="total-hours"><%= html_hours(lwr(:label_f_hour, spent_hours)) %></td>
+      </tr>
+      <tr>
+        <td width="130px" align="right"><%= l(:field_done_ratio) %></td>
+        <td width="340px" class="total-hours"><big><%= "%.0f" % completed_pourcent %></big>%</td>
+      </tr>
+      <tr>
+        <td width="130px" align="right"><%= l(:label_roadmap_due_in, "") %></td>
+        <td width="340px" class="total-hours"><%= "#{html_hours(lwr(:label_f_hour, rest_hours))} / #{html_hours(lwr(:label_f_day, rest_hours / 8.0))} / #{html_hours(lwr(:label_f_week, rest_hours / 40.0))}" %></td>
+      </tr>
+    <% end %>
+    </table>
+    </fieldset>
+  </div>
+<% end %>

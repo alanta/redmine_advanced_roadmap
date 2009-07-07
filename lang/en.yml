@@ -2,3 +2,8 @@ label_f_day: %.2f day
 label_f_day_plural: %.2f days
 label_f_week: %.2f week
 label_f_week_plural: %.2f weeks
+label_milestone: Milestone
+label_milestone_plural: Milestones
+permission_manage_milestones: Manage milestones
+label_milestone_new: New milestone
+notice_unable_delete_milestone: Unable to delete milestone.

@@ -2,3 +2,8 @@ label_f_day: %.2f día
 label_f_day_plural: %.2f días
 label_f_week: %.2f semana
 label_f_week_plural: %.2f semanas
+label_milestone: Hito
+label_milestone_plural: Hitos
+permission_manage_milestones: Administrar hitos
+label_milestone_new: Nuevo hito
+notice_unable_delete_milestone: No se puede borrar el hito.
