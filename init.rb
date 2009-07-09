@@ -15,10 +15,10 @@ RAILS_DEFAULT_LOGGER.info "Advanced roapmap plugin for RedMine"
 
 Redmine::Plugin.register :advanced_roapmap do
   name "Advanced roadmap plugin"
-  url ""
+  url "http://ociotec.com/redmine/projects/show/advanced-roadmap"
   author "Emilio Gonzalez"
   author_url "http://ociotec.com"
   description "This is a plugin for Redmine that is used to show more information inside the Roadmap page"
-  version "0.0.3"
+  version "0.0.4"
   permission :manage_milestones, {:milestones => [:add, :edit, :destroy]}
 end

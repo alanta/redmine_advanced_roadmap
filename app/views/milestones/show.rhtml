@@ -4,23 +4,19 @@
 
 <h2><%= h(@milestone.name) %></h2>
 
-<p><%=h @milestone.description %></p>
+<% if @milestone.completed? %>
+  <p><%= format_date(@milestone.effective_date) %></p>
+<% elsif @milestone.effective_date %>
+  <p><strong><%= due_date_distance_in_words(@milestone.effective_date) %></strong> (<%= format_date(@milestone.effective_date) %>)</p>
+<% end %>
+
+<p><%= h(@milestone.description) %></p>
 
 <% if @milestone.versions.empty? %>
   <p class="nodata"><%= l(:label_no_data) %></p>
 <% else %>
   <div id="roadmap">
-    <% @milestone.versions.each do |version| %>   
-      <% issues = version.fixed_issues.find(:all,
-                                            :include => [:status, :tracker],
-                                            :order => "#{Tracker.table_name}.position, #{Issue.table_name}.id") %>
-      <%= tag 'a', :name => version.name %>
-      <h3 class="icon22 icon22-package"><%= link_to h(version.name), :controller => 'versions', :action => 'show', :id => version %></h3>
-      <%= render :partial => 'versions/overview', :locals => {:version => version} %>
-      <%= render(:partial => "wiki/content", :locals => {:content => version.wiki_page.content}) if version.wiki_page %>
-      <%= render :partial => 'versions/issues', :locals => {:version => version, :issues => issues} %>
-    <% end %>
-
+    <%= tag "a", :name => l(:label_total) %>
     <h3 class="icon22 icon22-package"><%= l(:label_total) %></h3>
     <%
       estimated_hours = 0.0
@@ -64,5 +60,31 @@
     <% end %>
     </table>
     </fieldset>
+
+    <% @milestone.versions.each do |version| %>   
+      <% issues = version.fixed_issues.find(:all,
+                                            :include => [:status, :tracker],
+                                            :order => "#{Tracker.table_name}.position, #{Issue.table_name}.id") %>
+      <%= tag 'a', :name => version.name %>
+      <h3 class="icon22 icon22-package"><%= link_to h(version.name), :controller => 'versions', :action => 'show', :id => version %></h3>
+      <%= render :partial => 'versions/overview', :locals => {:version => version} %>
+      <%= render(:partial => "wiki/content", :locals => {:content => version.wiki_page.content}) if version.wiki_page %>
+      <%= render :partial => 'versions/issues', :locals => {:version => version, :issues => issues} %>
+    <% end %>
   </div>
 <% end %>
+
+<% content_for :sidebar do %>
+  <h3><%= l(:label_milestone_plural) %></h3>
+  <% @milestone.project.milestones.each do |milestone| %>
+    <%= link_to milestone.name, :controller => :milestones, :action => :show, :id => milestone.id %><br />
+  <% end %>
+
+  <h3><%= l(:label_version_plural) %></h3>
+  <%= link_to l(:label_total), "##{l(:label_total)}" %><br />
+  <% @milestone.versions.each do |version| %>
+    <%= link_to version.name, "##{version.name}" %><br />
+  <% end %>
+  <% end %>
+
+<% html_title(@milestone.name) %>

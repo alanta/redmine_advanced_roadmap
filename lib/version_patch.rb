@@ -5,7 +5,8 @@ module VersionPatch
     base.send(:include, InstanceMethods)
     base.class_eval do
       unloadable
-      belongs_to :milestone
+      has_many :milestone_versions, :dependent => :destroy
+      has_many :milestones, :through => :milestone_versions
       alias_method_chain :completed_pourcent, :advanced_info
       alias_method_chain :closed_pourcent, :advanced_info
     end

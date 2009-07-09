@@ -26,4 +26,8 @@ class Milestone < ActiveRecord::Base
     versions.index(version) != nil
   end
 
+  def completed?
+    effective_date && (effective_date <= Date.today)
+  end
+
 end
