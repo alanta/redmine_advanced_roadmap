@@ -19,6 +19,6 @@ Redmine::Plugin.register :advanced_roapmap do
   author "Emilio Gonzalez"
   author_url "http://ociotec.com"
   description "This is a plugin for Redmine that is used to show more information inside the Roadmap page"
-  version "0.0.4"
+  version "0.0.5"
   permission :manage_milestones, {:milestones => [:add, :edit, :destroy]}
 end

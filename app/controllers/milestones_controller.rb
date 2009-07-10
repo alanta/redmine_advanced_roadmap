@@ -14,12 +14,14 @@ class MilestonesController < ApplicationController
     @milestone = @project.milestones.build(params[:milestone])
     @milestone.user_id = User.current.id
     if request.post? and @milestone.save
-      params[:versions].each do |version|
-        milestone_version = MilestoneVersion.new
-        milestone_version.milestone_id = @milestone.id
-        milestone_version.version_id = version
-        milestone_version.save
-      end
+      if params[:versions]
+        params[:versions].each do |version|
+          milestone_version = MilestoneVersion.new
+          milestone_version.milestone_id = @milestone.id
+          milestone_version.version_id = version
+          milestone_version.save
+        end
+       end
       flash[:notice] = l(:notice_successful_create)
       redirect_to :controller => :projects, :action => :settings, :tab => "milestones", :id => @project
     end
@@ -32,12 +34,14 @@ class MilestonesController < ApplicationController
     if request.post?
       versions_to_delete = @milestone.versions
       versions_to_add = []
-      params[:versions].each do |version|
-        index = @milestone.versions.index(version)
-        if index != nil
-          versions_to_delete.remove(index)
-        else
-          versions_to_add << version
+      if params[:versions]
+        params[:versions].each do |version|
+          index = @milestone.versions.index(version)
+          if index != nil
+            versions_to_delete.remove(index)
+          else
+            versions_to_add << version
+          end
         end
       end
     end
