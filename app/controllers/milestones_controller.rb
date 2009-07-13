@@ -10,6 +10,7 @@ class MilestonesController < ApplicationController
   
   def add
     @project = Project.find(params[:id])
+    @projects = Project.find(:all).sort { |a, b| a.name.downcase <=> b.name.downcase }
     @versions = @project.versions
     @milestone = @project.milestones.build(params[:milestone])
     @milestone.user_id = User.current.id
@@ -30,6 +31,7 @@ class MilestonesController < ApplicationController
   end
   
   def edit
+    @projects = Project.find(:all).sort { |a, b| a.name.downcase <=> b.name.downcase }
     @versions = @project.versions
     if request.post?
       versions_to_delete = @milestone.versions
