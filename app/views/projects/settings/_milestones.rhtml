@@ -14,7 +14,7 @@
     <td><%= link_to h(milestone.name), :controller => :milestones, :action => :show, :id => milestone.id %></td>
     <td align="center"><%= format_date(milestone.effective_date) %></td>
     <td><%=h milestone.description %></td>
-    <td align="center"><%= milestone.versions.collect {|v| link_to(h(v.name), :controller => :versions, :action => :show, :id => v) }.join(", ") %></td>
+    <td align="center"><%= milestone.versions.sort! { |a, b| a.name.downcase <=> b.name.downcase }.collect {|v| link_to(h(v.name), :controller => :versions, :action => :show, :id => v) }.join(", ") %></td>
     <td align="center"><%= link_to_if_authorized l(:button_edit), { :controller => :milestones, :action => :edit, :id => milestone.id }, :class => 'icon icon-edit' %></td>
     <td align="center"><%= link_to_if_authorized l(:button_delete), {:controller => :milestones, :action => :destroy, :id => milestone.id }, :confirm => l(:text_are_you_sure), :method => :post, :class => 'icon icon-del' %></td>
     </tr>
