@@ -13,7 +13,7 @@ if issues.size > 0
           "      <th width=\"9%\" align=\"center\">#{l(:label_roadmap_due_in, "")}</th>" +
           "   </thead>\n" +
           "   <tbody>\n"
-  issues.each do |issue|
+  issues.sort { |a, b| a.subject.downcase <=> b.subject.downcase }.each do |issue|
     color = ""
     begin_strike = ""
     end_strike = ""
