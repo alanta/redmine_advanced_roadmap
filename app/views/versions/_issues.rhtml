@@ -34,7 +34,7 @@ if issues.size > 0
       end_strike = "</strike>"
     end
     text += "      <tr class=\"#{cycle("odd", "even")}\">\n" +
-            "         <td align=\"left\">#{link_to_issue(issue)}</td>\n" +
+            "         <td align=\"left\">#{link_to_issue(issue, :subject => false)}</td>\n" +
             "         <td align=\"left\"><font color=\"#{color}\">#{begin_strike}#{h(issue.subject)}#{end_strike}</font></td>\n" +
             "         <td align=\"center\"><font color=\"#{color}\">#{begin_strike}#{("%.2f" % issue.estimated_hours) if issue.estimated_hours}#{end_strike}</font></td>\n" +
             "         <td align=\"center\"><font color=\"#{color}\">#{begin_strike}#{"%.2f" % issue.spent_hours}#{end_strike}</font></td>\n" +
