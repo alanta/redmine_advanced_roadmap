@@ -8,10 +8,6 @@ require "rubygems"
 require "gravatar"
 require "dispatcher"
 require_dependency File.dirname(File.dirname(__FILE__)) + "/awesome_nested_set/rails/init"
-require "version_patch"
-require "project_patch"
-require "projects_controller_patch"
-require "projects_helper_patch"
 
 Dispatcher.to_prepare do 
   begin
@@ -24,6 +20,7 @@ Dispatcher.to_prepare do
   Project.send(:include, ProjectPatch)
   ProjectsController.send(:include, ProjectsControllerPatch)
   ProjectsHelper.send(:include, ProjectsHelperPatch)
+  Redmine::I18n.send(:include, RedmineI18nPatch)
   Version.send(:include, VersionPatch)
 end
 

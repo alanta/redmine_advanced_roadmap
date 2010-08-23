@@ -23,7 +23,7 @@
 </tr>
 <tr>
 	<td width="130px" align="right"><%= l(:label_roadmap_due_in, "") %></td>
-	<td width="240px" class="total-hours"><%= "#{l_hours(@version.rest_hours)} <br/> #{l_hours(@version.rest_hours / 8.0)} <br/> #{l_hours(@version.rest_hours / 40.0)}" %></td>
+	<td width="240px" class="total-hours"><%= "#{l_hours(@version.rest_hours)} <br/> #{l_days(@version.rest_hours / 8.0)} <br/> #{l_weeks(@version.rest_hours / 40.0)}" %></td>
 </tr>
 <% end %>
 </table>
