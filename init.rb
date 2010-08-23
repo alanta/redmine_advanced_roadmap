@@ -8,7 +8,6 @@ require "rubygems"
 require "gravatar"
 require "dispatcher"
 require_dependency File.dirname(File.dirname(__FILE__)) + "/awesome_nested_set/rails/init"
-
 Dispatcher.to_prepare do 
   begin
     require_dependency "application"
