@@ -1,0 +1,10 @@
+nl:
+  label_f_day: "{{value}} dag"
+  label_f_day_plural: "{{value}} dagen"
+  label_f_week: "{{value}} week"
+  label_f_week_plural: "{{value}} weken"
+  label_milestone: "Mijlpaal"
+  label_milestone_plural: "Mijlpalen"
+  label_milestone_new: "Nieuwe mijlpaal"
+  notice_unable_delete_milestone: "Mijlpaal kan niet verwijderd worden."
+  permission_manage_milestones: "Mijlpalen beheren"
