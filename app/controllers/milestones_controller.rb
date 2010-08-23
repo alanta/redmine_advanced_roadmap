@@ -5,6 +5,9 @@ class MilestonesController < ApplicationController
   before_filter :find_milestone, :except => [:add]
   before_filter :authorize, :except => [:show]
 
+  helper :custom_fields
+  include CustomFieldsHelper
+   
   def show
     projects = {}
     @milestone.versions.each do |version|
