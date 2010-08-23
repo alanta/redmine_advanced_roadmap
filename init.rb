@@ -1,12 +1,31 @@
+# This plugin should be reloaded in development mode.
+if RAILS_ENV == "development"
+  ActiveSupport::Dependencies.load_once_paths.reject!{|x| x =~ /^#{Regexp.escape(File.dirname(__FILE__))}/}
+end
+
 require "redmine"
+require "rubygems"
 require "gravatar"
-require "application_controller"
-require File.dirname(__FILE__) + "/../awesome_nested_set/rails/init"
+require "dispatcher"
+require_dependency File.dirname(File.dirname(__FILE__)) + "/awesome_nested_set/rails/init"
+require "version_patch"
 require "project_patch"
 require "projects_controller_patch"
 require "projects_helper_patch"
-require "issue_patch"
-require "version_patch"
+
+Dispatcher.to_prepare do 
+  begin
+    require_dependency "application"
+  rescue LoadError
+    require_dependency "application_controller"
+  end
+
+  Issue.send(:include, IssuePatch)
+  Project.send(:include, ProjectPatch)
+  ProjectsController.send(:include, ProjectsControllerPatch)
+  ProjectsHelper.send(:include, ProjectsHelperPatch)
+  Version.send(:include, VersionPatch)
+end
 
 RAILS_DEFAULT_LOGGER.info "Advanced roapmap plugin for RedMine"
 
@@ -16,7 +35,7 @@ Redmine::Plugin.register :advanced_roapmap do
   author "Emilio Gonzalez"
   author_url "http://ociotec.com"
   description "This is a plugin for Redmine that is used to show more information inside the Roadmap page"
-  version "0.0.6"
+  version "0.1.0"
   permission :manage_milestones, {:milestones => [:add, :edit, :destroy]}
   requires_redmine :version_or_higher => "0.9.0"
 end
