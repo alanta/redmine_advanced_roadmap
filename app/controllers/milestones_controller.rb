@@ -6,6 +6,15 @@ class MilestonesController < ApplicationController
   before_filter :authorize, :except => [:show]
 
   def show
+    projects = {}
+    @milestone.versions.each do |version|
+      version.fixed_issues.each do |issue|
+        if !(projects.include?(issue.project.id))
+          projects[issue.project.id] = issue.project.id
+        end
+      end
+    end
+    @more_than_one_project = (projects.count > 1)
   end
   
   def add

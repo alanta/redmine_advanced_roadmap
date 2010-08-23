@@ -60,7 +60,7 @@
     <% end %>
     </table>
     </fieldset>
-
+    
     <% @milestone.versions.each do |version| %>   
       <% issues = version.fixed_issues.find(:all,
                                             :include => [:status, :tracker],
@@ -68,7 +68,7 @@
       <%= tag 'a', :name => version.name %>
       <h3 class="icon22 icon22-package"><%= link_to h(version.name), :controller => 'versions', :action => 'show', :id => version %></h3>
       <%= render :partial => 'versions/overview', :locals => {:version => version} %>
-      <%= render :partial => 'versions/milestones', :locals => {:version => version} %>
+      <%= render :partial => 'versions/milestones', :locals => {:version => version, :show_project => @more_than_one_project} %>
       <%= render(:partial => "wiki/content", :locals => {:content => version.wiki_page.content}) if version.wiki_page %>
       <%= render :partial => 'versions/issues', :locals => {:version => version, :issues => issues} %>
     <% end %>

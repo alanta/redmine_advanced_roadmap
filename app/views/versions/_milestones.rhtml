@@ -1,6 +1,15 @@
-<%- if !version.nil? and !version.milestones.empty? -%>
+<%- if !version.nil? -%>
+<%- show_project ||= false -%>
+<%- if show_project -%>
+<p>
+  <strong><%=l(:label_project)%>:</strong>
+  <%= link_to(version.project.name, {:controller => :projects, :action => :show, :id => version.project.id}) %>
+</p>
+<%- end -%>
+<%- if !version.milestones.empty? -%>
 <p>
   <strong><%=l(:label_milestone_plural)%>:</strong>
   <%= version.milestones.sort.collect {|m| link_to(m.name, {:controller => :milestones, :action => :show, :id => m.id})}.join(", ") %>
 </p>
+<%- end -%>
 <%- end -%>
