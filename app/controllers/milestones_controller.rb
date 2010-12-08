@@ -6,7 +6,9 @@ class MilestonesController < ApplicationController
   before_filter :authorize, :except => [:show]
 
   helper :custom_fields
+  helper :projects
   include CustomFieldsHelper
+  include ProjectsHelper
    
   def show
     projects = {}

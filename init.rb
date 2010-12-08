@@ -17,21 +17,20 @@ Dispatcher.to_prepare do
 
   Issue.send(:include, IssuePatch)
   Project.send(:include, ProjectPatch)
-  ProjectsController.send(:include, ProjectsControllerPatch)
   ProjectsHelper.send(:include, ProjectsHelperPatch)
   Redmine::I18n.send(:include, RedmineI18nPatch)
   Version.send(:include, VersionPatch)
 end
 
-RAILS_DEFAULT_LOGGER.info "Advanced roapmap plugin for RedMine"
+RAILS_DEFAULT_LOGGER.info "Advanced roapmap & milestones plugin for RedMine"
 
 Redmine::Plugin.register :advanced_roapmap do
-  name "Advanced roadmap plugin"
+  name "Advanced roadmap & milestones plugin"
   url "http://ociotec.com/redmine/projects/show/advanced-roadmap"
-  author "Emilio Gonzalez"
+  author "Emilio González Montaña"
   author_url "http://ociotec.com"
-  description "This is a plugin for Redmine that is used to show more information inside the Roadmap page"
-  version "0.1.0"
+  description "This is a plugin for Redmine that is used to show more information inside the Roadmap page and implements the milestones featuring"
+  version "0.2.0"
   permission :manage_milestones, {:milestones => [:add, :edit, :destroy]}
   requires_redmine :version_or_higher => "0.9.0"
 end
