@@ -1,0 +1,11 @@
+# Translation by Ki Won Kim (http://blog.naver.com/xyz37, xyz37@naver.com)
+ko:
+  label_f_day: "%.2f 일"
+  label_f_day_plural: "%.2f 일"
+  label_f_week: "%.2f 주"
+  label_f_week_plural: "%.2f 주"
+  label_milestone: "마일스톤"
+  label_milestone_plural: "마일스톤"
+  permission_manage_milestones: "마일스톤 관리"
+  label_milestone_new: "새 마일스톤"
+  notice_unable_delete_milestone: "마일스톤을 삭제할 수 없습니다."
