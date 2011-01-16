@@ -19,7 +19,7 @@ class MilestonesController < ApplicationController
         end
       end
     end
-    @more_than_one_project = (projects.count > 1)
+    @more_than_one_project = (projects.length > 1)
   end
   
   def add
