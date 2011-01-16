@@ -1,0 +1,10 @@
+pl:
+  label_f_day: "{{value}} dzieñ"
+  label_f_day_plural: "{{value}} dni"
+  label_f_week: "{{value}} tydzieñ"
+  label_f_week_plural: "{{value}} tygodni"
+  label_milestone: "Etap"
+  label_milestone_plural: "Etapy"
+  label_milestone_new: "Nowy etap"
+  notice_unable_delete_milestone: "Nie mo¿na usun±æ etapu."
+  permission_manage_milestones: "Zarz±dzaj etapami"
