@@ -20,6 +20,7 @@ Dispatcher.to_prepare do
   ProjectsHelper.send(:include, ProjectsHelperPatch)
   Redmine::I18n.send(:include, RedmineI18nPatch)
   Version.send(:include, VersionPatch)
+  VersionsController.send(:include, VersionsControllerPatch)
 end
 
 RAILS_DEFAULT_LOGGER.info "Advanced roapmap & milestones plugin for RedMine"
