@@ -6,5 +6,6 @@ es:
   label_milestone: "Hito"
   label_milestone_plural: "Hitos"
   label_milestone_new: "Nuevo hito"
+  label_setting_parallel_effort_custom_field: "Campo personalizado para esfuerzo paralelo"
   notice_unable_delete_milestone: "No se puede borrar el hito."
   permission_manage_milestones: "Administrar hitos"

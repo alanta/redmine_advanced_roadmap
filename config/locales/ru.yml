@@ -6,5 +6,6 @@ ru:
   label_milestone: "Этап"
   label_milestone_plural: "Этапы"
   label_milestone_new: "Новый этап"
+  label_setting_parallel_effort_custom_field: "Параллельные усилия настраиваемого поля"
   notice_unable_delete_milestone: "Невозможно удалить этап."
   permission_manage_milestones: "Управление этапами"

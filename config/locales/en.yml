@@ -6,5 +6,6 @@ en:
   label_milestone: "Milestone"
   label_milestone_plural: "Milestones"
   label_milestone_new: "New milestone"
+  label_setting_parallel_effort_custom_field: "Parallel effort custom field"
   notice_unable_delete_milestone: "Unable to delete milestone."
   permission_manage_milestones: "Manage milestones"

@@ -7,5 +7,6 @@ ko:
   label_milestone: "마일스톤"
   label_milestone_plural: "마일스톤"
   permission_manage_milestones: "마일스톤 관리"
+  label_setting_parallel_effort_custom_field: "병렬 노력 사용자 정의 입력란"
   label_milestone_new: "새 마일스톤"
   notice_unable_delete_milestone: "마일스톤을 삭제할 수 없습니다."

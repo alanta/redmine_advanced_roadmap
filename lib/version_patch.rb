@@ -84,6 +84,23 @@ module VersionPatch
         issues
       end
       
+      def parallel_factor
+        factor = 1.0
+        if !(custom_field = CustomField.find(Setting.plugin_advanced_roadmap["parallel_effort_custom_field"].to_i)).nil? and
+           custom_field.field_format == "float"
+          if !(custom_value = CustomValue.find(:first, :conditions => {:customized_type => "Version", :customized_id => id, :custom_field_id => custom_field.id})).nil?
+            factor = custom_value.value.to_f
+          else
+            factor = custom_field.default_value.to_f
+          end
+        end
+        factor
+      end
+      
+      def parallel_rest_hours
+        rest_hours / parallel_factor
+      end
+      
     end
   end
 end

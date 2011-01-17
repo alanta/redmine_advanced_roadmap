@@ -1,0 +1,8 @@
+<%- version_custom_fields = CustomField.find(:all, :conditions => "type = 'VersionCustomField'")
+    version_custom_field_options = options_for_select([["", 0]] + version_custom_fields.collect{|c| [c.name, c.id]},
+                                                    @settings["parallel_effort_custom_field"].to_i) -%>
+
+<p>
+  <label><%= l(:label_setting_parallel_effort_custom_field) %>:</label>
+  <%= select_tag("settings[parallel_effort_custom_field]", version_custom_field_options) %>
+</p>

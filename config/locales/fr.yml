@@ -6,5 +6,6 @@ fr:
   label_milestone: "Jalon"
   label_milestone_plural: "Jalons"
   label_milestone_new: "Nouveau jalon"
+  label_setting_parallel_effort_custom_field: "Effort parallèle de champ personnalisé"
   notice_unable_delete_milestone: "Impossible de supprimer le jalon."
   permission_manage_milestones: "Gestion des jalons"

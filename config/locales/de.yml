@@ -6,5 +6,6 @@ de:
   label_milestone: "Milenstein"
   label_milestone_plural: "Milensteine"
   label_milestone_new: "Neuer Meilenstein"
+  label_setting_parallel_effort_custom_field: "Parallel Aufwand benutzerdefiniertes Feld"
   notice_unable_delete_milestone: "Milenstein konnte nicht entfernt werden."
   permission_manage_milestones: "Meilensteine verwalten"
