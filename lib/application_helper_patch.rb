@@ -6,9 +6,9 @@ module ApplicationHelperPatch
 
       def color_by_ratio(ratio)
         color = ""
-        color = "green" if ratio < 0.5
-        color = "orange" if ratio > 1.0
-        color = "red" if ratio > 1.5
+        color = Setting.plugin_advanced_roadmap["color_good"] if ratio <= Setting.plugin_advanced_roadmap["ratio_good"].to_f
+        color = Setting.plugin_advanced_roadmap["color_bad"] if ratio >= Setting.plugin_advanced_roadmap["ratio_bad"].to_f
+        color = Setting.plugin_advanced_roadmap["color_very_bad"] if ratio >= Setting.plugin_advanced_roadmap["ratio_very_bad"].to_f
         color
       end
 

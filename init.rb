@@ -37,6 +37,12 @@ Redmine::Plugin.register :advanced_roadmap do
   requires_redmine :version_or_higher => "1.0.0"
 
   settings :default => {"parallel_effort_custom_field" => "",
-                        "solved_issues_to_estimate" => "10"},
+                        "solved_issues_to_estimate" => "10",
+                        "ratio_good" => "0.8",
+                        "color_good" => "green",
+                        "ratio_bad" => "1.2",
+                        "color_bad" => "orange",
+                        "ratio_very_bad" => "1.5",
+                        "color_very_bad" => "red"},
            :partial => "settings/advanced_roadmap_settings"
 end
