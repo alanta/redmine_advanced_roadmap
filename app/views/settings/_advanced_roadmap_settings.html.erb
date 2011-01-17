@@ -6,3 +6,8 @@
   <label><%= l(:label_setting_parallel_effort_custom_field) %>:</label>
   <%= select_tag("settings[parallel_effort_custom_field]", version_custom_field_options) %>
 </p>
+
+<p>
+  <label><%= l(:label_setting_solved_issues_to_estimate) %>:</label>
+  <%= text_field_tag("settings[solved_issues_to_estimate]", @settings["solved_issues_to_estimate"]) %>
+</p>

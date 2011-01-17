@@ -15,6 +15,7 @@ Dispatcher.to_prepare do
     require_dependency "application_controller"
   end
 
+  ApplicationHelper.send(:include, ApplicationHelperPatch)
   Issue.send(:include, IssuePatch)
   Project.send(:include, ProjectPatch)
   ProjectsHelper.send(:include, ProjectsHelperPatch)
@@ -23,7 +24,7 @@ Dispatcher.to_prepare do
   VersionsController.send(:include, VersionsControllerPatch)
 end
 
-RAILS_DEFAULT_LOGGER.info "Advanced roapmap & milestones plugin for RedMine"
+RAILS_DEFAULT_LOGGER.info "Advanced roadmap & milestones plugin for RedMine"
 
 Redmine::Plugin.register :advanced_roadmap do
   name "Advanced roadmap & milestones plugin"
@@ -35,6 +36,7 @@ Redmine::Plugin.register :advanced_roadmap do
   permission :manage_milestones, {:milestones => [:add, :edit, :destroy]}
   requires_redmine :version_or_higher => "1.0.0"
 
-  settings :default => {"parallel_effort_custom_field" => ""},
+  settings :default => {"parallel_effort_custom_field" => "",
+                        "solved_issues_to_estimate" => "10"},
            :partial => "settings/advanced_roadmap_settings"
 end
