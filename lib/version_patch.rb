@@ -93,6 +93,7 @@ module VersionPatch
           else
             factor = custom_field.default_value.to_f
           end
+          factor = 1.0 if factor <= 0.0
         end
         factor
       end
