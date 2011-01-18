@@ -44,6 +44,7 @@ module VersionPatch
       def calculate_advance_info
         total_estimated = 0.0
         total_spent = 0.0
+        @total_pending = 0.0
         total_partial_pending = 0.0
         total_full_pending = 0.0
         @total_finished_ratio = 0.0
@@ -89,7 +90,6 @@ module VersionPatch
             @total_finished_ratio /= (total_spent + @total_pending)
             @total_ratio /= (total_spent + @total_pending)
           else
-            @total_pending = 0.0
             @total_finished_ratio = 0.0
             @total_ratio = 0.0
           end
@@ -112,7 +112,7 @@ module VersionPatch
 
       def parallel_factor
         factor = 1.0
-        if !(custom_field = CustomField.find(Setting.plugin_advanced_roadmap["parallel_effort_custom_field"].to_i)).nil? and
+        if !(custom_field = CustomField.find_by_id(Setting.plugin_advanced_roadmap["parallel_effort_custom_field"].to_i)).nil? and
            custom_field.field_format == "float"
           if !(custom_value = CustomValue.find(:first, :conditions => {:customized_type => "Version", :customized_id => id, :custom_field_id => custom_field.id})).nil?
             factor = custom_value.value.to_f
