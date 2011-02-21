@@ -23,26 +23,26 @@
 <fieldset><legend><%= l(:label_time_tracking) %></legend>
 <table>
 <tr>
-  <td width="130px" align="right"><%= l(:field_estimated_hours) %></td>
+  <td width="200px" align="right"><%= l(:field_estimated_hours) %></td>
   <td width="340px" class="total-hours"><%= l_hours(estimated_hours) %></td>
 </tr>
 <% if User.current.allowed_to?(:view_time_entries, project) %>
   <tr>
-    <td width="130px" align="right"><%= l(:label_spent_time) %></td>
+    <td width="200px" align="right"><%= l(:label_spent_time) %></td>
     <td width="340px" class="total-hours"><%= l_hours(spent_hours) %></td>
   </tr>
   <tr>
-    <td width="130px" align="right"><%= l(:field_done_ratio) %></td>
+    <td width="200px" align="right"><%= l(:field_done_ratio) %></td>
     <td width="340px" class="total-hours"><big><%= "%.0f" % completed_pourcent %></big>%</td>
   </tr>
   <tr>
-    <td width="130px" align="right"><%= l(:label_roadmap_due_in, "") %></td>
+    <td width="200px" align="right"><%= l(:label_roadmap_due_in, "") %></td>
     <td width="340px" class="total-hours"><%= "#{l_hours(rest_hours)} / #{l_days(rest_hours / 8.0)} / #{l_weeks(rest_hours / 40.0)}" %></td>
   </tr>
   <%- if !(custom_field = CustomField.find_by_id(Setting.plugin_advanced_roadmap["parallel_effort_custom_field"].to_i)).nil? and
          custom_field.field_format == "float" and parallel_rest_hours != rest_hours -%>
   <tr>
-    <td width="130px" align="right"><%= l(:label_roadmap_due_in, "") %> (<%= custom_field.name %>)</td>
+    <td width="200px" align="right"><%= l(:label_roadmap_due_in, "") %> (<%= custom_field.name %>)</td>
     <td width="340px" class="total-hours"><%= "#{l_hours(parallel_rest_hours)} / #{l_days(parallel_rest_hours / 8.0)} / #{l_weeks(parallel_rest_hours / 40.0)}" %></td>
   </tr>
   <%- end -%>

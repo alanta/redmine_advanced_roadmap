@@ -1,6 +1,23 @@
 <%= render :partial => 'versions/overview', :locals => {:version => version} %>
 <%= render(:partial => "wiki/content", :locals => {:content => version.wiki_page.content}) if version.wiki_page %>
 
+<%- if (params[:controller] == "versions" and params[:action] == "index") or
+       (params[:controller] == "milestones" and params[:action] == "show") -%>
+<table>
+  <tr>
+    <td width="210px" align="right"><%= l(:label_roadmap_due_in, "") %></td>
+    <td width="340px" class="total-hours"><%= "#{l_hours(version.rest_hours)} / #{l_days(version.rest_hours / 8.0)} / #{l_weeks(version.rest_hours / 40.0)}" %></td>
+  </tr>
+  <%- if !(custom_field = CustomField.find_by_id(Setting.plugin_advanced_roadmap["parallel_effort_custom_field"].to_i)).nil? and
+         custom_field.field_format == "float" and version.parallel_rest_hours != version.rest_hours -%>
+  <tr>
+    <td width="210px" align="right"><%= l(:label_roadmap_due_in, "") %> (<%= custom_field.name %>)</td>
+    <td width="340px" class="total-hours"><%= "#{l_hours(version.parallel_rest_hours)} / #{l_days(version.parallel_rest_hours / 8.0)} / #{l_weeks(version.parallel_rest_hours / 40.0)}" %></td>
+  </tr>
+  <%- end -%>
+</table>
+<%- end -%>
+
 <%- if issues.present? -%>
 <fieldset class="related-issues"><legend><%= l(:label_related_issues) %></legend>
 <% form_tag({}) do %>
@@ -48,15 +65,6 @@
     <th align="center"><b><%= ("%.0f" % version.completed_pourcent) %>%</b></th>
     <th align="center"><b><%= ("%.2f" % version.rest_hours) %></b></th>
   </thead>
-  <%- if !(custom_field = CustomField.find_by_id(Setting.plugin_advanced_roadmap["parallel_effort_custom_field"].to_i)).nil? and
-         custom_field.field_format == "float" and
-         !(custom_value = CustomValue.find(:first, :conditions => {:customized_type => "Version", :customized_id => version.id, :custom_field_id => custom_field.id})).nil? and
-         custom_value.value.to_f != 1.0 -%>
-  <thead>
-    <th align="right" colspan="5"><b><%= l(:label_roadmap_due_in, "") %> (<%= custom_field.name %>):</b></th>
-    <th align="center"><b><%= ("%.2f" % version.parallel_rest_hours) %></b></th>
-  </thead>
-  <%- end -%>
 </table>
 <% end %>
 </fieldset>
