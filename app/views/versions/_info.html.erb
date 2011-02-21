@@ -35,19 +35,28 @@
       <td align="center"><font color="<%= color %>"><%= begin_strike %><%= ("%.2f" % (issue.rest_hours * ((!issue.closed? and (!issue.spent_hours or issue.spent_hours <= 0.0) and !version.estimated_speed.nil?) ? version.estimated_speed : 1.0))) if issue.estimated_hours %><%= end_strike %></font></td>
     </tr>
   <%- end -%>
-    <tr class="<%= cycle("odd", "even") %>">
-      <td align="left"><b><%= l(:label_total) %></b></td>
-      <td align="left">
-      <%- if !version.estimated_speed.nil? -%>
-        <b><%= l(:label_estimated_speed) %>: <font color="<%= color_by_ratio(version.estimated_speed) %>"><%= ("%.0f" % (100.0 / version.estimated_speed)) %>%</font></b>
-      <%- end -%>
-      </td>
-      <td align="center"><b><%= ("%.2f" % version.estimated_hours) %></b></td>
-      <td align="center"><b><%= ("%.2f" % version.spent_hours) %></b></td>
-      <td align="center"><b><%= ("%.0f" % version.completed_pourcent) %>%</b></td>
-      <td align="center"><b><%= ("%.2f" % version.parallel_rest_hours) %></b></td>
-    </tr>
   </tbody>
+  <thead>
+    <th align="left"><b><%= l(:label_total) %></b></th>
+    <th align="left">
+    <%- if !version.estimated_speed.nil? -%>
+      <b><%= l(:label_estimated_speed) %>: <font color="<%= color_by_ratio(version.estimated_speed) %>"><%= ("%.0f" % (100.0 / version.estimated_speed)) %>%</font></b>
+    <%- end -%>
+    </th>
+    <th align="center"><b><%= ("%.2f" % version.estimated_hours) %></b></th>
+    <th align="center"><b><%= ("%.2f" % version.spent_hours) %></b></th>
+    <th align="center"><b><%= ("%.0f" % version.completed_pourcent) %>%</b></th>
+    <th align="center"><b><%= ("%.2f" % version.rest_hours) %></b></th>
+  </thead>
+  <%- if !(custom_field = CustomField.find_by_id(Setting.plugin_advanced_roadmap["parallel_effort_custom_field"].to_i)).nil? and
+         custom_field.field_format == "float" and
+         !(custom_value = CustomValue.find(:first, :conditions => {:customized_type => "Version", :customized_id => version.id, :custom_field_id => custom_field.id})).nil? and
+         custom_value.value.to_f != 1.0 -%>
+  <thead>
+    <th align="right" colspan="5"><b><%= l(:label_roadmap_due_in, "") %> (<%= custom_field.name %>):</b></th>
+    <th align="center"><b><%= ("%.2f" % version.parallel_rest_hours) %></b></th>
+  </thead>
+  <%- end -%>
 </table>
 <% end %>
 </fieldset>
