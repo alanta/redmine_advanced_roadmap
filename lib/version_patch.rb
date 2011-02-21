@@ -80,12 +80,12 @@ module VersionPatch
             end
           end
           if solved_issues < Setting.plugin_advanced_roadmap["solved_issues_to_estimate"].to_i or total_solved_estimated == 0.0
-            @progress_factor = 1.0
+            @progress_factor = nil
           else
             @progress_factor = total_solved_spent / total_solved_estimated
           end
           if total_spent + total_partial_pending + total_full_pending > 0.0
-            total_full_pending *= @progress_factor
+            total_full_pending *= @progress_factor.nil? ? 1.0 : @progress_factor
             @total_pending = total_partial_pending + total_full_pending
             @total_finished_ratio /= (total_spent + @total_pending)
             @total_ratio /= (total_spent + @total_pending)
