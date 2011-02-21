@@ -1,9 +1,9 @@
 en:
   label_estimated_speed: "Estimated speed"
-  label_f_day: "{{value}} day"
-  label_f_day_plural: "{{value}} days"
-  label_f_week: "{{value}} week"
-  label_f_week_plural: "{{value}} weeks"
+  label_f_day: "%{value} day"
+  label_f_day_plural: "%{value} days"
+  label_f_week: "%{value} week"
+  label_f_week_plural: "%{value} weeks"
   label_milestone: "Milestone"
   label_milestone_new: "New milestone"
   label_milestone_plural: "Milestones"

@@ -1,9 +1,9 @@
 ko:
   label_estimated_speed: "예상 속도"
-  label_f_day: "%.2f 일"
-  label_f_day_plural: "%.2f 일"
-  label_f_week: "%.2f 주"
-  label_f_week_plural: "%.2f 주"
+  label_f_day: "%{value} 일"
+  label_f_day_plural: "%{value} 일"
+  label_f_week: "%{value} 주"
+  label_f_week_plural: "%{value} 주"
   label_milestone: "마일스톤"
   label_milestone_new: "새 마일스톤"
   label_milestone_plural: "마일스톤"

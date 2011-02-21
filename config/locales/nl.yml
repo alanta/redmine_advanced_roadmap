@@ -1,9 +1,9 @@
 nl:
   label_estimated_speed: "Geschatte snelheid"
-  label_f_day: "{{value}} dag"
-  label_f_day_plural: "{{value}} dagen"
-  label_f_week: "{{value}} week"
-  label_f_week_plural: "{{value}} weken"
+  label_f_day: "%{value} dag"
+  label_f_day_plural: "%{value} dagen"
+  label_f_week: "%{value} week"
+  label_f_week_plural: "%{value} weken"
   label_milestone: "Mijlpaal"
   label_milestone_new: "Nieuwe mijlpaal"
   label_milestone_plural: "Mijlpalen"

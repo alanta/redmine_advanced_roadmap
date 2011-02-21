@@ -1,9 +1,9 @@
 ru:
   label_estimated_speed: "Расчетная скорость"
-  label_f_day: "{{value}} день"
-  label_f_day_plural: "{{value}} дней"
-  label_f_week: "{{value}} неделя"
-  label_f_week_plural: "{{value}} недель"
+  label_f_day: "%{value} день"
+  label_f_day_plural: "%{value} дней"
+  label_f_week: "%{value} неделя"
+  label_f_week_plural: "%{value} недель"
   label_milestone: "Этап"
   label_milestone_new: "Новый этап"
   label_milestone_plural: "Этапы"
