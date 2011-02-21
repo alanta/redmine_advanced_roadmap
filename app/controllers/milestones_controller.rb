@@ -19,19 +19,7 @@ class MilestonesController < ApplicationController
         end
       end
     end
-    @milestone.versions.sort!{|a, b|
-      if !a.effective_date.nil? and !b.effective_date.nil?
-        a.effective_date <=> b.effective_date
-      elsif a.effective_date.nil?
-        1
-      elsif b.effective_date.nil?
-        -1
-      elsif a.rest_hours != b.rest_hours
-        a.rest_hours <=> b.rest_hours
-      else
-        a.name.downcase <=> b.name.downcase
-      end
-    }
+    Version.sort_versions(@milestone.versions)
     @more_than_one_project = (projects.length > 1)
   end
   
