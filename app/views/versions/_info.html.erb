@@ -32,7 +32,7 @@
       <td align="center"><font color="<%= color %>"><%= begin_strike %><%= ("%.2f" % issue.estimated_hours) if issue.estimated_hours %><%= end_strike %></font></td>
       <td align="center"><font color="<%= color %>"><%= begin_strike %><%= "%.2f" % issue.spent_hours %><%= end_strike %></font></td>
       <td align="center"><font color="<%= color %>"><%= begin_strike %><%= (("%.0f" % issue.done_ratio) + "%") if issue.estimated_hours %><%= end_strike %></font></td>
-      <td align="center"><font color="<%= color %>"><%= begin_strike %><%= ("%.2f" % (issue.rest_hours * ((!issue.closed? and (!issue.spent_hours or issue.spent_hours <= 0.0)) ? version.estimated_speed : 1.0))) if issue.estimated_hours %><%= end_strike %></font></td>
+      <td align="center"><font color="<%= color %>"><%= begin_strike %><%= ("%.2f" % (issue.rest_hours * ((!issue.closed? and (!issue.spent_hours or issue.spent_hours <= 0.0) and !version.estimated_speed.nil?) ? version.estimated_speed : 1.0))) if issue.estimated_hours %><%= end_strike %></font></td>
     </tr>
   <%- end -%>
     <tr class="<%= cycle("odd", "even") %>">
