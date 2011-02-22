@@ -1,49 +1,30 @@
 <%= tag "a", :name => l(:label_total) %>
 <h3 class="icon22 icon22-package"><%= l(:label_total) %></h3>
-<%- estimated_hours = 0.0
-    spent_hours = 0.0
-    rest_hours = 0.0
-    parallel_rest_hours = 0.0
-    completed_pourcent = 0.0
-    closed_pourcent = 0.0
-    versions.each do |version|
-      estimated_hours += version.estimated_hours
-      spent_hours += version.spent_hours
-      rest_hours += version.rest_hours
-      parallel_rest_hours += version.parallel_rest_hours
-      completed_pourcent += version.spent_hours
-      closed_pourcent += version.closed_spent_hours
-    end
-    total = spent_hours + rest_hours
-    if total > 0.0
-      completed_pourcent = (completed_pourcent * 100.0) / total
-      closed_pourcent = (closed_pourcent * 100.0) / total
-    end -%>
-<%= progress_bar([closed_pourcent, completed_pourcent], :width => '40em', :legend => ('%0.0f%' % completed_pourcent)) %>
+<%= progress_bar([totals[:closed_pourcent], totals[:completed_pourcent]], :width => '40em', :legend => ('%0.0f%' % totals[:completed_pourcent])) %>
 <fieldset><legend><%= l(:label_time_tracking) %></legend>
 <table>
 <tr>
   <td width="200px" align="right"><%= l(:field_estimated_hours) %></td>
-  <td width="340px" class="total-hours"><%= l_hours(estimated_hours) %></td>
+  <td width="340px" class="total-hours"><%= l_hours(totals[:estimated_hours]) %></td>
 </tr>
 <% if User.current.allowed_to?(:view_time_entries, project) %>
   <tr>
     <td width="200px" align="right"><%= l(:label_spent_time) %></td>
-    <td width="340px" class="total-hours"><%= l_hours(spent_hours) %></td>
+    <td width="340px" class="total-hours"><%= l_hours(totals[:spent_hours]) %></td>
   </tr>
   <tr>
     <td width="200px" align="right"><%= l(:field_done_ratio) %></td>
-    <td width="340px" class="total-hours"><big><%= "%.0f" % completed_pourcent %></big>%</td>
+    <td width="340px" class="total-hours"><big><%= "%.0f" % totals[:completed_pourcent] %></big>%</td>
   </tr>
   <tr>
     <td width="200px" align="right"><%= l(:label_roadmap_due_in, "") %></td>
-    <td width="340px" class="total-hours"><%= "#{l_hours(rest_hours)} / #{l_days(rest_hours / 8.0)} / #{l_weeks(rest_hours / 40.0)}" %></td>
+    <td width="340px" class="total-hours"><%= "#{l_hours(totals[:rest_hours])} / #{l_days(totals[:rest_hours] / 8.0)} / #{l_weeks(totals[:rest_hours] / 40.0)}" %></td>
   </tr>
   <%- if !(custom_field = CustomField.find_by_id(Setting.plugin_advanced_roadmap["parallel_effort_custom_field"].to_i)).nil? and
-         custom_field.field_format == "float" and parallel_rest_hours != rest_hours -%>
+         custom_field.field_format == "float" and totals[:parallel_rest_hours] != totals[:rest_hours] -%>
   <tr>
     <td width="200px" align="right"><%= l(:label_roadmap_due_in, "") %> (<%= custom_field.name %>)</td>
-    <td width="340px" class="total-hours"><%= "#{l_hours(parallel_rest_hours)} / #{l_days(parallel_rest_hours / 8.0)} / #{l_weeks(parallel_rest_hours / 40.0)}" %></td>
+    <td width="340px" class="total-hours"><%= "#{l_hours(totals[:parallel_rest_hours])} / #{l_days(totals[:parallel_rest_hours] / 8.0)} / #{l_weeks(totals[:parallel_rest_hours] / 40.0)}" %></td>
   </tr>
   <%- end -%>
 <% end %>

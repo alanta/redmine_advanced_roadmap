@@ -2,9 +2,13 @@
 <%= render(:partial => "wiki/content", :locals => {:content => version.wiki_page.content}) if version.wiki_page %>
 
 <%- if (params[:controller] == "versions" and params[:action] == "index") or
-       (params[:controller] == "milestones" and params[:action] == "show") and
-       version.rest_hours > 0.0 -%>
+       (params[:controller] == "milestones" and params[:action] == "show") -%>
 <table>
+  <tr>
+      <td width="210px" align="right">% <%= l(:label_project) %></td>
+      <td width="340px" class="total-hours"><%= "%.0f" % (((version.spent_hours + version.rest_hours) * 100.0) / (totals[:spent_hours] + totals[:rest_hours])) %>%</td>
+  </tr>
+  <%- if version.rest_hours > 0.0 -%>
   <tr>
     <td width="210px" align="right"><%= l(:label_roadmap_due_in, "") %></td>
     <td width="340px" class="total-hours"><%= "#{l_hours(version.rest_hours)} / #{l_days(version.rest_hours / 8.0)} / #{l_weeks(version.rest_hours / 40.0)}" %></td>
@@ -15,6 +19,7 @@
     <td width="210px" align="right"><%= l(:label_roadmap_due_in, "") %> (<%= custom_field.name %>)</td>
     <td width="340px" class="total-hours"><%= "#{l_hours(version.parallel_rest_hours)} / #{l_days(version.parallel_rest_hours / 8.0)} / #{l_weeks(version.parallel_rest_hours / 40.0)}" %></td>
   </tr>
+  <%- end -%>
   <%- end -%>
 </table>
 <%- end -%>
