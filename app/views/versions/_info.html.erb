@@ -2,7 +2,8 @@
 <%= render(:partial => "wiki/content", :locals => {:content => version.wiki_page.content}) if version.wiki_page %>
 
 <%- if (params[:controller] == "versions" and params[:action] == "index") or
-       (params[:controller] == "milestones" and params[:action] == "show") -%>
+       (params[:controller] == "milestones" and params[:action] == "show") and
+       version.rest_hours > 0.0 -%>
 <table>
   <tr>
     <td width="210px" align="right"><%= l(:label_roadmap_due_in, "") %></td>
