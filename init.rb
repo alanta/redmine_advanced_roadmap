@@ -24,6 +24,8 @@ Dispatcher.to_prepare do
   VersionsController.send(:include, VersionsControllerPatch)
 end
 
+require_dependency "advanced_roadmap/view_hooks"
+
 RAILS_DEFAULT_LOGGER.info "Advanced roadmap & milestones plugin for RedMine"
 
 Redmine::Plugin.register :advanced_roadmap do
