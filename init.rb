@@ -34,7 +34,7 @@ Redmine::Plugin.register :advanced_roadmap do
   description "This is a plugin for Redmine that is used to show more information inside the Roadmap page and implements the milestones featuring"
   version "0.3.2"
   permission :manage_milestones, {:milestones => [:add, :edit, :destroy]}
-  requires_redmine :version_or_higher => "1.0.0"
+  requires_redmine :version_or_higher => "1.0.1"
 
   settings :default => {"parallel_effort_custom_field" => "",
                         "solved_issues_to_estimate" => "10",
