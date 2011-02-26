@@ -49,9 +49,10 @@
           end_strike = "</strike>"
         end -%>
     <tr class="hascontextmenu <%= cycle("odd", "even") %>\">
+      <%- tab = "&nbsp;" * 3 * issue.parents_count -%>
       <td class="checkbox"><%= check_box_tag("ids[]", issue.id) %></td>
-      <td align="left"><%= "&nbsp;" * 3 * issue.parents_count %><%= link_to_issue(issue, :project => (@project != issue.project), :subject => false) %></td>
-      <td align="left"><font color="<%= color %>"><%= begin_strike %><%= h(issue.subject) %><%= end_strike %></font></td>
+      <td align="left"><%= tab %><%= link_to_issue(issue, :project => (@project != issue.project), :subject => false) %></td>
+      <td align="left"><%= tab %><font color="<%= color %>"><%= begin_strike %><%= h(issue.subject) %><%= end_strike %></font></td>
       <td align="center"><font color="<%= color %>"><%= begin_strike %><%= ("%.2f" % issue.estimated_hours) if issue.estimated_hours %><%= end_strike %></font></td>
       <td align="center"><font color="<%= color %>"><%= begin_strike %><%= "%.2f" % issue.spent_hours %><%= end_strike %></font></td>
       <td align="center"><font color="<%= color %>"><%= begin_strike %><%= (("%.0f" % issue.done_ratio) + "%") if issue.estimated_hours %><%= end_strike %></font></td>
