@@ -29,8 +29,7 @@
 <% form_tag({}) do %>
 <table class="list related-issues">
   <thead>
-    <th width="20%" align="left"><%= l(:field_issue) %></th>
-    <th width="44%" align="left"><%= l(:field_description) %></th>
+    <th width="64%" align="left" colspan="2"><%= l(:field_issue) %></th>
     <th width="9%" align="center"><%= l(:field_estimated_hours) %></th>
     <th width="9%" align="center"><%= l(:label_spent_time) %></th>
     <th width="9%" align="center"><%= l(:field_done_ratio) %></th>
@@ -51,8 +50,28 @@
     <tr class="hascontextmenu <%= cycle("odd", "even") %>\">
       <%- tab = "&nbsp;" * 3 * issue.parents_count -%>
       <td class="checkbox"><%= check_box_tag("ids[]", issue.id) %></td>
-      <td align="left"><%= tab %><%= link_to_issue(issue, :project => (@project != issue.project), :subject => false) %></td>
-      <td align="left"><%= tab %><font color="<%= color %>"><%= begin_strike %><%= h(issue.subject) %><%= end_strike %></font></td>
+      <td align="left" colspan="2">
+        <div class="tooltip">
+          <%= tab %>
+          <font color="<%= color %>"><%= begin_strike %>
+            <%= link_to_issue(issue, :project => (@project != issue.project)) %>
+          <%= end_strike %></font>
+          <span class="tip">
+            <table width="100%">
+              <tr><td colspan="2"><%= link_to_issue(issue) %></td></tr>
+              <%- if @project != issue.project -%>
+              <tr><td><strong><%= l(:field_project) %>:</strong></td><td><%= link_to_project(issue.project) %></td></tr>
+              <%- end -%>
+              <tr><td><strong><%= l(:field_status) %>:</strong></td><td><%= issue.status.name %></td></tr>
+              <tr><td><strong><%= l(:field_priority) %>:</strong></td><td><%= issue.priority.name %></td></tr>
+              <tr><td><strong><%= l(:field_assigned_to) %>:</strong></td><td><%= link_to_user(issue.assigned_to) %></td></tr>
+              <tr><td><strong><%= l(:field_category) %>:</strong></td><td><%= issue.category %></td></tr>
+              <tr><td><strong><%= l(:field_start_date) %>:</strong></td><td><%= format_date(issue.start_date) %></td></tr>
+              <tr><td width="40%"><strong><%= l(:field_due_date) %>:</strong></td><td width="60%"><%= format_date(issue.due_date) %></td></tr>
+            </table>
+          </span>
+        </div>
+      </td>
       <td align="center"><font color="<%= color %>"><%= begin_strike %><%= ("%.2f" % issue.estimated_hours) if issue.estimated_hours %><%= end_strike %></font></td>
       <td align="center"><font color="<%= color %>"><%= begin_strike %><%= "%.2f" % issue.spent_hours %><%= end_strike %></font></td>
       <td align="center"><font color="<%= color %>"><%= begin_strike %><%= (("%.0f" % issue.done_ratio) + "%") if issue.estimated_hours %><%= end_strike %></font></td>
@@ -61,16 +80,16 @@
   <%- end -%>
   </tbody>
   <thead>
-    <th align="left"><b><%= l(:label_total) %></b></th>
+    <th align="left"><%= l(:label_total) %></th>
     <th align="left">
     <%- if !version.estimated_speed.nil? -%>
-      <b><%= l(:label_estimated_speed) %>: <font color="<%= color_by_ratio(version.estimated_speed) %>"><%= ("%.0f" % (100.0 / version.estimated_speed)) %>%</font></b>
+      <%= l(:label_estimated_speed) %>: <font color="<%= color_by_ratio(version.estimated_speed) %>"><%= ("%.0f" % (100.0 / version.estimated_speed)) %>%</font>
     <%- end -%>
     </th>
-    <th align="center"><b><%= ("%.2f" % version.estimated_hours) %></b></th>
-    <th align="center"><b><%= ("%.2f" % version.spent_hours) %></b></th>
-    <th align="center"><b><%= ("%.0f" % version.completed_pourcent) %>%</b></th>
-    <th align="center"><b><%= ("%.2f" % version.rest_hours) %></b></th>
+    <th align="center"><%= ("%.2f" % version.estimated_hours) %></th>
+    <th align="center"><%= ("%.2f" % version.spent_hours) %></th>
+    <th align="center"><%= ("%.0f" % version.completed_pourcent) %>%</th>
+    <th align="center"><%= ("%.2f" % version.rest_hours) %></th>
   </thead>
 </table>
 <% end %>
