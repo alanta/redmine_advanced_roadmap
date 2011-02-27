@@ -5,7 +5,7 @@
        (params[:controller] == "milestones" and params[:action] == "show") -%>
 <table>
   <tr>
-      <td width="210px" align="right">% <%= l(:label_project) %></td>
+      <td width="210px" align="right">% <%= (params[:controller] == "milestones") ? l(:label_milestone) : l(:label_project) %></td>
       <td width="340px" class="total-hours"><%= "%.0f" % (((version.spent_hours + version.rest_hours) * 100.0) / (totals[:spent_hours] + totals[:rest_hours])) %>%</td>
   </tr>
   <%- if version.rest_hours > 0.0 -%>
