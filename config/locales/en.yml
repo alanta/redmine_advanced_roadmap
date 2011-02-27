@@ -1,4 +1,5 @@
 en:
+  label_click_to_enlarge_reduce: "Click to enlarge/reduce"
   label_estimated_speed: "Estimated speed"
   label_f_day: "%{value} day"
   label_f_day_plural: "%{value} days"

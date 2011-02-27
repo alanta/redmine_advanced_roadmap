@@ -1,9 +1,11 @@
+require "gruff"
+
 class MilestonesController < ApplicationController
   
   menu_item :roadmap
   before_filter :find_project, :only => [:add]
-  before_filter :find_milestone, :except => [:add]
-  before_filter :authorize, :except => [:show]
+  before_filter :find_milestone, :except => [:add, :total_graph]
+  before_filter :authorize, :except => [:show, :total_graph]
 
   helper :custom_fields
   helper :projects
@@ -86,7 +88,26 @@ class MilestonesController < ApplicationController
     flash[:error] = l(:notice_unable_delete_milestone)
     redirect_to :controller => :projects, :action => :settings, :tab => "milestones", :id => @project
   end
-  
+
+  def total_graph
+    g = Gruff::Pie.new(params[:size] || "400x400")
+    g.hide_title = true
+    g.theme = graph_theme
+    g.margins = 0
+
+    versions = params[:versions] || []
+    percentajes = params[:percentajes] || []
+    i = 0
+    while i < versions.size and i < percentajes.size
+      percentajes[i] = percentajes[i].to_f
+      g.data(versions[i], percentajes[i])
+      i += 1
+    end
+
+    headers["Content-Type"] = "image/png"
+    send_data(g.to_blob, :type => "image/png", :disposition => "inline")
+  end
+
 private
 
   def find_project
@@ -100,6 +121,14 @@ private
     @project = @milestone.project
   rescue ActiveRecord::RecordNotFound
     render_404
+  end
+
+  def graph_theme
+    {
+      :colors => ["#DB2626", "#6A6ADB", "#64D564", "#F727F7", "#EBEB20", "#303030", "#12ABAD", "#808080", "#B7580B", "#316211"],
+      :marker_color => "#AAAAAA",
+      :background_colors => ["#FFFFFF", "#FFFFFF"]
+    }
   end
 
 end
