@@ -90,7 +90,7 @@ class MilestonesController < ApplicationController
   end
 
   def total_graph
-    g = Gruff::Pie.new(params[:size] || "400x400")
+    g = Gruff::Pie.new(params[:size] || "500x400")
     g.hide_title = true
     g.theme = graph_theme
     g.margins = 0

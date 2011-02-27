@@ -13,9 +13,9 @@ module ApplicationHelperPatch
       end
 
       def total_graph_tag(versions, totals, options = {})
-        small_width = options[:small_width] || 100
+        small_width = options[:small_width] || 125
         small_height = options[:small_height] || 100
-        big_width = options[:big_width] || 400
+        big_width = options[:big_width] || 500
         big_height = options[:big_height] || 400
         versions_names = versions.collect{|version| version.name}
         versions_percentajes = versions.collect{|version| (((version.spent_hours + version.rest_hours) * 100.0) / (totals[:spent_hours] + totals[:rest_hours]))}
