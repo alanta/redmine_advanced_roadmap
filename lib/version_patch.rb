@@ -45,6 +45,7 @@ module VersionPatch
         total_estimated = 0.0
         total_spent = 0.0
         @total_pending = 0.0
+        @total_speed_pending = 0.0
         total_partial_pending = 0.0
         total_full_pending = 0.0
         @total_finished_ratio = 0.0
@@ -85,8 +86,8 @@ module VersionPatch
             @progress_factor = total_solved_spent / total_solved_estimated
           end
           if total_spent + total_partial_pending + total_full_pending > 0.0
-            total_full_pending *= @progress_factor.nil? ? 1.0 : @progress_factor
             @total_pending = total_partial_pending + total_full_pending
+            @total_speed_pending = total_partial_pending + (total_full_pending * (@progress_factor.nil? ? 1.0 : @progress_factor))
             @total_finished_ratio /= (total_spent + @total_pending)
             @total_ratio /= (total_spent + @total_pending)
           else
@@ -128,6 +129,15 @@ module VersionPatch
         rest_hours / parallel_factor
       end
 
+      def speed_rest_hours
+        calculate_advance_info unless @total_speed_pending
+        @total_speed_pending
+      end
+
+      def parallel_speed_rest_hours
+        speed_rest_hours / parallel_factor
+      end
+
       def self.sort_versions(versions)
         versions.sort!{|a, b|
           if !a.effective_date.nil? and !b.effective_date.nil?
@@ -149,14 +159,18 @@ module VersionPatch
         totals[:estimated_hours] = 0.0
         totals[:spent_hours] = 0.0
         totals[:rest_hours] = 0.0
+        totals[:speed_rest_hours] = 0.0
         totals[:parallel_rest_hours] = 0.0
+        totals[:parallel_speed_rest_hours] = 0.0
         totals[:completed_pourcent] = 0.0
         totals[:closed_pourcent] = 0.0
         versions.each do |version|
           totals[:estimated_hours] += version.estimated_hours
           totals[:spent_hours] += version.spent_hours
           totals[:rest_hours] += version.rest_hours
+          totals[:speed_rest_hours] += version.speed_rest_hours
           totals[:parallel_rest_hours] += version.parallel_rest_hours
+          totals[:parallel_speed_rest_hours] += version.parallel_speed_rest_hours
           totals[:completed_pourcent] += version.spent_hours
           totals[:closed_pourcent] += version.closed_spent_hours
         end
