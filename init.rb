@@ -38,6 +38,10 @@ Redmine::Plugin.register :advanced_roadmap do
   permission :manage_milestones, {:milestones => [:add, :edit, :destroy]}
   requires_redmine :version_or_higher => "1.0.2"
 
+  project_module :issue_tracking do
+    permission :view_issue_estimated_hours, {}
+  end
+
   settings :default => {"parallel_effort_custom_field" => "",
                         "solved_issues_to_estimate" => "10",
                         "ratio_good" => "0.8",

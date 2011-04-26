@@ -6,10 +6,12 @@
     <tr>
       <td valign="top">
         <table>
-        <tr>
-          <td width="300px" align="right"><%= l(:field_estimated_hours) %></td>
-          <td width="340px" class="total-hours"><%= l_hours(totals[:estimated_hours]) %></td>
-        </tr>
+        <%- if User.current.allowed_to?(:view_issue_estimated_hours, project) -%>
+          <tr>
+            <td width="300px" align="right"><%= l(:field_estimated_hours) %></td>
+            <td width="340px" class="total-hours"><%= l_hours(totals[:estimated_hours]) %></td>
+          </tr>
+        <%- end -%>
         <%- if User.current.allowed_to?(:view_time_entries, project) -%>
           <tr>
             <td width="300px" align="right"><%= l(:label_spent_time) %></td>
@@ -20,7 +22,8 @@
           <td width="300px" align="right"><%= l(:field_done_ratio) %></td>
           <td width="340px" class="total-hours"><big><%= "%.0f" % totals[:completed_pourcent] %></big>%</td>
         </tr>
-        <%- if User.current.allowed_to?(:view_time_entries, project) -%>
+        <%- if User.current.allowed_to?(:view_time_entries, project) and
+               User.current.allowed_to?(:view_issue_estimated_hours, project) -%>
           <tr>
             <td width="300px" align="right"><%= l(:label_roadmap_due_in, "") %></td>
             <td width="340px" class="total-hours"><%= "#{l_hours(totals[:rest_hours])} / #{l_days(totals[:rest_hours] / 8.0)} / #{l_weeks(totals[:rest_hours] / 40.0)}" %></td>

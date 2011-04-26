@@ -18,3 +18,4 @@ fr:
   label_setting_solved_issues_to_estimate: "Problèmes résolus pour estimer"
   notice_unable_delete_milestone: "Impossible de supprimer le jalon."
   permission_manage_milestones: "Gestion des jalons"
+  permission_view_issue_estimated_hours: "Voir estimé heures"

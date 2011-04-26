@@ -18,3 +18,4 @@ es:
   label_setting_solved_issues_to_estimate: "Peticiones resueltas para estimar"
   notice_unable_delete_milestone: "No se puede borrar el hito."
   permission_manage_milestones: "Administrar hitos"
+  permission_view_issue_estimated_hours: "Ver horas estimadas"

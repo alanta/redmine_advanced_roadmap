@@ -18,3 +18,4 @@ pl:
   label_setting_solved_issues_to_estimate: "Rozwiązanych w celu oszacowania"
   notice_unable_delete_milestone: "Nie można usunąć kamień etapu."
   permission_manage_milestones: "Zarządzaj etapami"
+  permission_view_issue_estimated_hours: "Zobacz szacuje godzin"

@@ -18,3 +18,4 @@ nl:
   label_setting_solved_issues_to_estimate: "Opgeloste problemen in te schatten"
   notice_unable_delete_milestone: "Mijlpaal kan niet verwijderd worden."
   permission_manage_milestones: "Mijlpalen beheren"
+  permission_view_issue_estimated_hours: "Bekijk geraamde aantal uren"

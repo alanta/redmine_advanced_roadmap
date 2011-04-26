@@ -18,3 +18,4 @@ ru:
   label_setting_solved_issues_to_estimate: "Сыграло вопросов для оценки"
   notice_unable_delete_milestone: "Невозможно удалить этап."
   permission_manage_milestones: "Управление этапами"
+  permission_view_issue_estimated_hours: "Открыть оценкам часов"

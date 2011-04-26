@@ -18,3 +18,4 @@ ko:
   label_setting_solved_issues_to_estimate: "해결 문제 예측"
   notice_unable_delete_milestone: "마일스톤을 삭제할 수 없습니다."
   permission_manage_milestones: "마일스톤 관리"
+  permission_view_issue_estimated_hours: "보기 시간을 추정"
