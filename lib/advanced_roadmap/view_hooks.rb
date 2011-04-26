@@ -4,5 +4,7 @@ module AdvancedRoadmap
               :partial => "hooks/milestones")
     render_on(:view_issues_sidebar_planning_bottom,
               :partial => "hooks/milestones")
+    render_on(:view_issues_show_details_bottom,
+              :partial => "hooks/issues/show")
   end
 end
