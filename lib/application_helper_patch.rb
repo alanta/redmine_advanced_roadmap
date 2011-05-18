@@ -26,12 +26,10 @@ module ApplicationHelperPatch
                             :versions => versions_names,
                             :percentajes => versions_percentajes,
                             :size => "#{big_width}x#{big_height}"),
-            :witdh => small_width,
-            :height => small_height,
             :title => l(:label_click_to_enlarge_reduce),
-            :style => "cursor: pointer;",
+            :style => "cursor: pointer; width: #{small_width}px; height: #{small_height}px;",
             :id => "total_graph_image",
-            :onclick => "image = document.getElementById('total_graph_image'); if (image.width == #{big_width}) { image.width = #{small_width}; image.height = #{small_height}; } else { image.width = #{big_width}; image.height = #{big_height}; }")
+            :onclick => "image = document.getElementById('total_graph_image'); if (image.style.width == '#{big_width}px') { image.style.width = '#{small_width}px'; image.style.height = '#{small_height}px'; } else { image.style.width = '#{big_width}px'; image.style.height = '#{big_height}px'; }")
       end
 
     end
