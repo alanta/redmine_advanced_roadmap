@@ -17,6 +17,7 @@ Dispatcher.to_prepare do
 
   ApplicationHelper.send(:include, ApplicationHelperPatch)
   Issue.send(:include, IssuePatch)
+  IssuesController.send(:include, IssuesControllerPatch)
   Project.send(:include, ProjectPatch)
   ProjectsHelper.send(:include, ProjectsHelperPatch)
   Redmine::I18n.send(:include, RedmineI18nPatch)
