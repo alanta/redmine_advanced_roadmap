@@ -1,7 +1,7 @@
 require File.dirname(__FILE__) + '/base'
 require File.dirname(__FILE__) + '/bar_conversion'
 
-class Gruff::Bar < Gruff::Base
+class AdvancedRoadmap::Gruff::Bar < AdvancedRoadmap::Gruff::Base
 
   # Spacing factor applied between bars
   attr_accessor :bar_spacing

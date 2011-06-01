@@ -12,7 +12,7 @@ require File.dirname(__FILE__) + '/base'
 #
 # There are also other options described below, such as #baseline_value, #baseline_color, #hide_dots, and #hide_lines.
 
-class Gruff::Line < Gruff::Base
+class AdvancedRoadmap::Gruff::Line < AdvancedRoadmap::Gruff::Base
 
   # Draw a dashed line at the given value
   attr_accessor :baseline_value

@@ -8,7 +8,7 @@ require File.dirname(__FILE__) + '/stacked_mixin'
 #
 # alun.eyre@googlemail.com 
 
-class Gruff::SideStackedBar < Gruff::SideBar
+class AdvancedRoadmap::Gruff::SideStackedBar < AdvancedRoadmap::Gruff::SideBar
   include StackedMixin
 
   def draw

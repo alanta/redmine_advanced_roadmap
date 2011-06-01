@@ -4,7 +4,7 @@ require File.dirname(__FILE__) + '/base'
 # Graph with dots and labels along a vertical access
 # see: 'Creating More Effective Graphs' by Robbins
 
-class Gruff::Dot < Gruff::Base
+class AdvancedRoadmap::Gruff::Dot < AdvancedRoadmap::Gruff::Base
 
   def draw
     @has_left_labels = true

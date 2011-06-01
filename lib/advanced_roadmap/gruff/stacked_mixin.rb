@@ -1,9 +1,9 @@
 
-module Gruff::Base::StackedMixin
+module AdvancedRoadmap::Gruff::Base::StackedMixin
   # Used by StackedBar and child classes.
   #
   # tsal: moved from Base 03 FEB 2007
-  DATA_VALUES_INDEX = Gruff::Base::DATA_VALUES_INDEX
+  DATA_VALUES_INDEX = AdvancedRoadmap::Gruff::Base::DATA_VALUES_INDEX
   def get_maximum_by_stack
     # Get sum of each stack
     max_hash = {}

@@ -4,7 +4,7 @@ require File.dirname(__FILE__) + '/base'
 #
 # Doesn't work yet.
 #
-class Gruff::PhotoBar < Gruff::Base
+class AdvancedRoadmap::Gruff::PhotoBar < AdvancedRoadmap::Gruff::Base
 
 # TODO
 #

@@ -11,7 +11,7 @@ require File.dirname(__FILE__) + '/base'
 #
 # To control where the pie chart starts creating slices, use #zero_degree.
 
-class Gruff::Pie < Gruff::Base
+class AdvancedRoadmap::Gruff::Pie < AdvancedRoadmap::Gruff::Base
 
   TEXT_OFFSET_PERCENTAGE = 0.15
 

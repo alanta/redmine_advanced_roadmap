@@ -39,7 +39,7 @@ require File.dirname(__FILE__) + '/base'
 # * Other named files will be used if the input matches the filename (without the filetype extension).
 # * If there is a file named 'default.png', it will be used unless other input values are set for the corresponding layer.
 
-class Gruff::Scene < Gruff::Base
+class AdvancedRoadmap::Gruff::Scene < AdvancedRoadmap::Gruff::Base
     
   # An array listing the foldernames that will be rendered, from back to front.
   #

@@ -1,6 +1,6 @@
 require File.dirname(__FILE__) + '/base'
 
-class Gruff::Bullet < Gruff::Base
+class AdvancedRoadmap::Gruff::Bullet < AdvancedRoadmap::Gruff::Base
 
   def initialize(target_width="400x40")
     if not Numeric === target_width

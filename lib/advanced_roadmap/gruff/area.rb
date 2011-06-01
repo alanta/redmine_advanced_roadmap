@@ -1,7 +1,7 @@
 
 require File.dirname(__FILE__) + '/base'
 
-class Gruff::Area < Gruff::Base
+class AdvancedRoadmap::Gruff::Area < AdvancedRoadmap::Gruff::Base
 
   def draw
     super
