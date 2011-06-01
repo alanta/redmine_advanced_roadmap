@@ -20,8 +20,7 @@ module AdvancedRoadmap
           big_height = options[:big_height] || 400
           versions_names = versions.collect{|version| version.name}
           versions_percentajes = versions.collect{|version| (((version.spent_hours + version.rest_hours) * 100.0) / (totals[:spent_hours] + totals[:rest_hours]))}
-          tag("embed",
-              :type => "image/png",
+          tag("img",
               :src => url_for(:controller => "milestones",
                               :action => "total_graph",
                               :versions => versions_names,
