@@ -31,10 +31,10 @@ RAILS_DEFAULT_LOGGER.info "Advanced roadmap & milestones plugin for RedMine"
 
 Redmine::Plugin.register :advanced_roadmap do
   name "Advanced roadmap & milestones plugin"
-  url "http://ociotec.com/redmine/projects/show/advanced-roadmap"
+  url "https://ociotec.com/redmine/projects/advanced-roadmap"
   author "Emilio González Montaña"
   author_url "http://ociotec.com"
-  description "This is a plugin for Redmine that is used to show more information inside the Roadmap page and implements the milestones featuring"
+  description "This is a plugin for Redmine that is used to show more information inside the Roadmap page and implements the milestones featuring."
   version "0.5.1"
   permission :manage_milestones, {:milestones => [:add, :edit, :destroy]}
   requires_redmine :version_or_higher => "1.0.2"
@@ -44,7 +44,7 @@ Redmine::Plugin.register :advanced_roadmap do
   end
 
   settings :default => {"parallel_effort_custom_field" => "",
-                        "solved_issues_to_estimate" => "10",
+                        "solved_issues_to_estimate" => "5",
                         "ratio_good" => "0.8",
                         "color_good" => "green",
                         "ratio_bad" => "1.2",
