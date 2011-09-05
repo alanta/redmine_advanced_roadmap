@@ -1,9 +1,9 @@
 pl:
   label_estimated_speed: "Szacowana prędkość"
-  label_f_day: "{{value}} # dzień"
-  label_f_day_plural: "{{value}} dni"
-  label_f_week: "{{value}} tydzień"
-  label_f_week_plural: "{{value}} tygodni"
+  label_f_day: "%{value} # dzień"
+  label_f_day_plural: "%{value} dni"
+  label_f_week: "%{value} tydzień"
+  label_f_week_plural: "%{value} tygodni"
   label_milestone: "Etap"
   label_milestone_new: "Nowy etap"
   label_milestone_plural: "Etapy"

@@ -43,6 +43,29 @@
 
 issues ||= []
 if issues.size > 0 %> 
+<%- if (params[:controller] == "versions" and params[:action] == "index") or
+       (params[:controller] == "milestones" and params[:action] == "show") -%>
+<table>
+  <tr>
+      <td width="210px" align="right">% <%= l(:label_project) %></td>
+      <td width="340px" class="total-hours"><%= "%.0f" % (((version.spent_hours + version.rest_hours) * 100.0) / (totals[:spent_hours] + totals[:rest_hours])) %>%</td>
+  </tr>
+  <%- if version.rest_hours > 0.0 -%>
+  <tr>
+    <td width="210px" align="right"><%= l(:label_roadmap_due_in, "") %></td>
+    <td width="340px" class="total-hours"><%= "#{l_hours(version.rest_hours)} / #{l_days(version.rest_hours / 8.0)} / #{l_weeks(version.rest_hours / 40.0)}" %></td>
+  </tr>
+  <%- if !(custom_field = CustomField.find_by_id(Setting.plugin_advanced_roadmap["parallel_effort_custom_field"].to_i)).nil? and
+         custom_field.field_format == "float" and version.parallel_rest_hours != version.rest_hours -%>
+  <tr>
+    <td width="210px" align="right"><%= l(:label_roadmap_due_in, "") %> (<%= custom_field.name %>)</td>
+    <td width="340px" class="total-hours"><%= "#{l_hours(version.parallel_rest_hours)} / #{l_days(version.parallel_rest_hours / 8.0)} / #{l_weeks(version.parallel_rest_hours / 40.0)}" %></td>
+  </tr>
+  <%- end -%>
+  <%- end -%>
+</table>
+<%- end -%>
+
 <% form_tag({}) do %>
 <fieldset class="related-issues"><legend><%= l(:label_related_issues) %></legend>
 <table class="list related-issues">
@@ -59,15 +82,19 @@ if issues.size > 0 %>
 <%-   issues.find_all{|item| !item.parent }.each do |issue| -%>
      <%= render_issue( issue ) %>
   <%- end -%>
-    <tr class="<%= cycle("odd", "even") %>">
-      <td align="left"><b><%= l(:label_total) %></b></td>
-      <td align="left"><b><%= l(:label_estimated_speed) %>: <font color="<%= color_by_ratio(version.estimated_speed) %>"><%= ("%.0f" % (100.0 / version.estimated_speed)) %>%</font></b></td>
-      <td align="center"><b><%= ("%.2f" % version.estimated_hours) %></b></td>
-      <td align="center"><b><%= ("%.2f" % version.spent_hours) %></b></td>
-      <td align="center"><b><%= ("%.0f" % version.completed_pourcent) %>%</b></td>
-      <td align="center"><b><%= ("%.2f" % version.parallel_rest_hours) %></b></td>
-    </tr>
   </tbody>
+  <thead>
+    <th align="left"><b><%= l(:label_total) %></b></th>
+    <th align="left">
+    <%- if !version.estimated_speed.nil? -%>
+      <b><%= l(:label_estimated_speed) %>: <font color="<%= color_by_ratio(version.estimated_speed) %>"><%= ("%.0f" % (100.0 / version.estimated_speed)) %>%</font></b>
+    <%- end -%>
+    </th>
+    <th align="center"><b><%= ("%.2f" % version.estimated_hours) %></b></th>
+    <th align="center"><b><%= ("%.2f" % version.spent_hours) %></b></th>
+    <th align="center"><b><%= ("%.0f" % version.completed_pourcent) %>%</b></th>
+    <th align="center"><b><%= ("%.2f" % version.rest_hours) %></b></th>
+  </thead>
 </table>
 </fieldset>
 <% end %>

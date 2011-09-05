@@ -19,7 +19,9 @@ class MilestonesController < ApplicationController
         end
       end
     end
-    @more_than_one_project = (projects.count > 1)
+    Version.sort_versions(@milestone.versions)
+    @more_than_one_project = (projects.length > 1)
+    @totals = Version.calculate_totals(@milestone.versions)
   end
   
   def add

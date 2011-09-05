@@ -16,10 +16,10 @@
 <p class="nodata"><%= l(:label_no_data) %></p>
 <% else %>
 <div id="roadmap">
-<%= render(:partial => "versions/total", :locals => {:project => @project, :versions => @milestone.versions}) %>
+<%= render(:partial => "versions/total", :locals => {:project => @project, :totals => @totals}) %>
 <% @milestone.versions.each do |version| %>   
     <h3 class="version"><%= tag 'a', :name => version.name %><%= link_to_version version %></h3>
-    <%= render :partial => 'versions/info', :locals => {:version => version, :issues => version.sorted_fixed_issues} %>
+    <%= render :partial => 'versions/info', :locals => {:version => version, :issues => version.sorted_fixed_issues, :totals => @totals} %>
     <%= call_hook :view_projects_roadmap_version_bottom, :version => version %>
 <% end %>
 </div>

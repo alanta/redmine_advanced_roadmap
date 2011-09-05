@@ -1,9 +1,9 @@
 fr:
   label_estimated_speed: "Vitesse estimée"
-  label_f_day: "{{value}} jour"
-  label_f_day_plural: "{{value}} jours"
-  label_f_week: "{{value}} semaine"
-  label_f_week_plural: "{{value}} semaines"
+  label_f_day: "%{value} jour"
+  label_f_day_plural: "%{value} jours"
+  label_f_week: "%{value} semaine"
+  label_f_week_plural: "%{value} semaines"
   label_milestone: "Jalon"
   label_milestone_new: "Nouveau jalon"
   label_milestone_plural: "Jalons"

@@ -80,12 +80,12 @@ module VersionPatch
             end
           end
           if solved_issues < Setting.plugin_advanced_roadmap["solved_issues_to_estimate"].to_i or total_solved_estimated == 0.0
-            @progress_factor = 1.0
+            @progress_factor = nil
           else
             @progress_factor = total_solved_spent / total_solved_estimated
           end
           if total_spent + total_partial_pending + total_full_pending > 0.0
-            total_full_pending *= @progress_factor
+            total_full_pending *= @progress_factor.nil? ? 1.0 : @progress_factor
             @total_pending = total_partial_pending + total_full_pending
             @total_finished_ratio /= (total_spent + @total_pending)
             @total_ratio /= (total_spent + @total_pending)
@@ -128,6 +128,46 @@ module VersionPatch
         rest_hours / parallel_factor
       end
 
+      def self.sort_versions(versions)
+        versions.sort!{|a, b|
+          if !a.effective_date.nil? and !b.effective_date.nil?
+            a.effective_date <=> b.effective_date
+          elsif a.effective_date.nil? and !b.effective_date.nil?
+            1
+          elsif !a.effective_date.nil? and b.effective_date.nil?
+            -1
+          elsif a.rest_hours != b.rest_hours
+            a.rest_hours <=> b.rest_hours
+          else
+            a.name.downcase <=> b.name.downcase
+          end
+        }
+      end
+      
+      def self.calculate_totals(versions)
+        totals = {}
+        totals[:estimated_hours] = 0.0
+        totals[:spent_hours] = 0.0
+        totals[:rest_hours] = 0.0
+        totals[:parallel_rest_hours] = 0.0
+        totals[:completed_pourcent] = 0.0
+        totals[:closed_pourcent] = 0.0
+        versions.each do |version|
+          totals[:estimated_hours] += version.estimated_hours
+          totals[:spent_hours] += version.spent_hours
+          totals[:rest_hours] += version.rest_hours
+          totals[:parallel_rest_hours] += version.parallel_rest_hours
+          totals[:completed_pourcent] += version.spent_hours
+          totals[:closed_pourcent] += version.closed_spent_hours
+        end
+        totals[:total] = totals[:spent_hours] + totals[:rest_hours]
+        if totals[:total] > 0.0
+          totals[:completed_pourcent] = (totals[:completed_pourcent] * 100.0) / totals[:total]
+          totals[:closed_pourcent] = (totals[:closed_pourcent] * 100.0) / totals[:total]
+        end
+        totals
+      end
+      
     end
   end
 end
