@@ -3,12 +3,14 @@
 <%- estimated_hours = 0.0
     spent_hours = 0.0
     rest_hours = 0.0
+    parallel_rest_hours = 0.0
     completed_pourcent = 0.0
     closed_pourcent = 0.0
     versions.each do |version|
       estimated_hours += version.estimated_hours
       spent_hours += version.spent_hours
       rest_hours += version.rest_hours
+      parallel_rest_hours += version.parallel_rest_hours
       completed_pourcent += version.spent_hours
       closed_pourcent += version.closed_spent_hours
     end
@@ -35,7 +37,7 @@
   </tr>
   <tr>
     <td width="130px" align="right"><%= l(:label_roadmap_due_in, "") %></td>
-    <td width="340px" class="total-hours"><%= "#{l_hours(rest_hours)} / #{l_days(rest_hours / 8.0)} / #{l_weeks(rest_hours / 40.0)}" %></td>
+    <td width="340px" class="total-hours"><%= "#{l_hours(parallel_rest_hours)} / #{l_days(parallel_rest_hours / 8.0)} / #{l_weeks(parallel_rest_hours / 40.0)}" %></td>
   </tr>
 <% end %>
 </table>

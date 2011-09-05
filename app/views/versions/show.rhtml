@@ -19,6 +19,14 @@
     <td width="130px" align="right"><%= l(:label_spent_time) %></td>
     <td width="240px" class="total-hours"><%= html_hours(l_hours(@version.spent_hours)) %></td>
 </tr>
+<tr>
+  <td width="130px" align="right"><%= l(:field_done_ratio) %></td>
+  <td width="240px" class="total-hours"><big><%= "%.0f" % @version.completed_pourcent %></big>%</td>
+</tr>
+<tr>
+  <td width="130px" align="right"><%= l(:label_roadmap_due_in, "") %></td>
+  <td width="240px" class="total-hours"><%= "#{l_hours(@version.parallel_rest_hours)} <br /> #{l_days(@version.parallel_rest_hours / 8.0)} <br /> #{l_weeks(@version.parallel_rest_hours / 40.0)}" %></td>
+</tr>
 <% end %>
 </table>
 </fieldset>
