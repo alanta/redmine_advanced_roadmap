@@ -1,4 +1,5 @@
 de:
+  label_click_to_enlarge_reduce: "Klicken zum Vergrößern/Verkleinern"
   label_estimated_speed: "Geschätzte Geschwindigkeit"
   label_f_day: "%{value} Tag"
   label_f_day_plural: "%{value} Tage"
@@ -17,3 +18,4 @@ de:
   label_setting_solved_issues_to_estimate: "Gelöste Fragen zu schätzen"
   notice_unable_delete_milestone: "Milenstein konnte nicht entfernt werden."
   permission_manage_milestones: "Meilensteine verwalten"
+  permission_view_issue_estimated_hours: "View veranschlagten Stunden"

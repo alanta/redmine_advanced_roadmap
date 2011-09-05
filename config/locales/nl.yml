@@ -1,4 +1,5 @@
 nl:
+  label_click_to_enlarge_reduce: "Klik om te vergroten/verkleinen"
   label_estimated_speed: "Geschatte snelheid"
   label_f_day: "%{value} dag"
   label_f_day_plural: "%{value} dagen"
@@ -17,3 +18,4 @@ nl:
   label_setting_solved_issues_to_estimate: "Opgeloste problemen in te schatten"
   notice_unable_delete_milestone: "Mijlpaal kan niet verwijderd worden."
   permission_manage_milestones: "Mijlpalen beheren"
+  permission_view_issue_estimated_hours: "Bekijk geraamde aantal uren"

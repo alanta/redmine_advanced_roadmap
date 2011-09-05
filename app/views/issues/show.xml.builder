@@ -21,11 +21,15 @@ xml.issue do
   xml.start_date 	@issue.start_date
   xml.due_date 		@issue.due_date
   xml.done_ratio 	@issue.done_ratio
-  xml.estimated_hours @issue.estimated_hours
-  xml.rest_hours @issue.rest_hours
+  if User.current.allowed_to?(:view_issue_estimated_hours, @project)
+    xml.estimated_hours @issue.estimated_hours
+    if User.current.allowed_to?(:view_time_entries, @project)
+      xml.rest_hours @issue.rest_hours
+    end
+  end
   if User.current.allowed_to?(:view_time_entries, @project)
-  	xml.spent_hours		@issue.spent_hours
- 	end
+    xml.spent_hours		@issue.spent_hours
+  end
   
   xml.custom_fields do
   	@issue.custom_field_values.each do |custom_value|

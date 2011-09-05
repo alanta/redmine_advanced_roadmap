@@ -15,13 +15,14 @@ Dispatcher.to_prepare do
     require_dependency "application_controller"
   end
 
-  ApplicationHelper.send(:include, ApplicationHelperPatch)
-  Issue.send(:include, IssuePatch)
-  Project.send(:include, ProjectPatch)
-  ProjectsHelper.send(:include, ProjectsHelperPatch)
-  Redmine::I18n.send(:include, RedmineI18nPatch)
-  Version.send(:include, VersionPatch)
-  VersionsController.send(:include, VersionsControllerPatch)
+  ApplicationHelper.send(:include, AdvancedRoadmap::ApplicationHelperPatch)
+  Issue.send(:include, AdvancedRoadmap::IssuePatch)
+  IssuesController.send(:include, AdvancedRoadmap::IssuesControllerPatch)
+  Project.send(:include, AdvancedRoadmap::ProjectPatch)
+  ProjectsHelper.send(:include, AdvancedRoadmap::ProjectsHelperPatch)
+  Redmine::I18n.send(:include, AdvancedRoadmap::RedmineI18nPatch)
+  Version.send(:include, AdvancedRoadmap::VersionPatch)
+  VersionsController.send(:include, AdvancedRoadmap::VersionsControllerPatch)
 end
 
 require_dependency "advanced_roadmap/view_hooks"
@@ -30,16 +31,20 @@ RAILS_DEFAULT_LOGGER.info "Advanced roadmap & milestones plugin for RedMine"
 
 Redmine::Plugin.register :advanced_roadmap do
   name "Advanced roadmap & milestones plugin"
-  url "http://ociotec.com/redmine/projects/show/advanced-roadmap"
+  url "https://ociotec.com/redmine/projects/advanced-roadmap"
   author "Emilio González Montaña"
   author_url "http://ociotec.com"
-  description "This is a plugin for Redmine that is used to show more information inside the Roadmap page and implements the milestones featuring"
-  version "0.3.3"
+  description "This is a plugin for Redmine that is used to show more information inside the Roadmap page and implements the milestones featuring."
+  version "0.5.1"
   permission :manage_milestones, {:milestones => [:add, :edit, :destroy]}
   requires_redmine :version_or_higher => "1.0.2"
 
+  project_module :issue_tracking do
+    permission :view_issue_estimated_hours, {}
+  end
+
   settings :default => {"parallel_effort_custom_field" => "",
-                        "solved_issues_to_estimate" => "10",
+                        "solved_issues_to_estimate" => "5",
                         "ratio_good" => "0.8",
                         "color_good" => "green",
                         "ratio_bad" => "1.2",
