@@ -1,0 +1,84 @@
+<% 
+    def issue_list2(issues, &block)
+    ancestors = []
+    issues.each do |issue|
+      while (ancestors.any? && !issue.is_descendant_of?(ancestors.last))
+        ancestors.pop
+      end
+      yield issue, ancestors.size
+      ancestors << issue unless issue.leaf?
+    end
+  end
+
+  def render_issue( issue )
+	s = render_issue_row(issue, false, issue.descendants && !issue.descendants.empty? )
+	issue_list2(issue.descendants.sort_by(&:lft)) do |child, level|
+			 s << render_issue_row( child, true, false )
+	end
+	s
+  end
+  
+  def render_issue_row(issue, isChild, isParent)
+    color = ""
+    if issue.estimated_hours && issue.done_ratio
+      ratio = issue.spent_hours / ((issue.estimated_hours * issue.done_ratio) / 100.0)
+      if ratio < 0.5
+        color = "green"
+      end
+      if ratio > 1.0
+        color = "orange"        
+      end
+      if ratio > 1.5
+        color = "red"
+      end
+    end
+    
+       content_tag('tr',
+             content_tag('td', check_box_tag("ids[]", issue.id, false, :id => nil), :class => 'checkbox') +
+             content_tag('td', (isChild ? '* ' : '' )+link_to_issue(issue, :subject => false), :align => 'left' ) +
+             render_cell( h(issue.subject), color, "left", issue.closed? ) +
+			 render_cell( issue.estimated_hours ? ("%.2f" % issue.estimated_hours) : '', isParent ? '#999' : color, "center", issue.closed? ) +
+			 render_cell( "%.2f" % issue.spent_hours, isParent ? '#999' : color, "center", issue.closed? ) +
+			 render_cell( issue.estimated_hours ? (("%.0f" % issue.done_ratio) + "%") : '', isParent ? '#999' : color, "center", issue.closed? ) +
+			 render_cell( issue.estimated_hours ? ("%.2f" % issue.rest_hours) : '', isParent ? '#999' : color, "center", issue.closed? ),
+             :class => "#{cycle("odd", "even")} hascontextmenu")
+  end
+
+  def render_cell( content, color, align, closed )
+	content_tag('td', closed ? "<strike>"+content+"</strike>" : content, :align => align, :style => "color:#{color}" )
+  end
+  
+issues ||= []
+if issues.size > 0 %> 
+<% form_tag({}) do -%>
+<fieldset class="related-issues"><legend><%= l(:label_related_issues) %></legend>
+	<table class="list">
+        <thead>
+		  <th style="display:none"></th>
+          <th width="15%" align="left"><%= l(:field_issue) %></th>
+          <th width="49%" align="left"><%= l(:field_description) %></th>
+          <th width="9%" align="center"><%= l(:field_estimated_hours) %></th>
+          <th width="9%" align="center"><%= l(:label_spent_time) %></th>
+          <th width="9%" align="center"><%= l(:field_done_ratio) %></th>
+          <th width="9%" align="center"><%= l(:label_roadmap_due_in, "") %></th>
+        </thead>
+		<tbody>
+<%-   issues.find_all{|item| !item.parent }.each do |issue| -%>
+		<%= render_issue( issue ) %>
+	
+		
+  <%- end -%>
+		<tr class="<%= cycle("odd", "even")%>">
+			<td align="left"></td>
+			<td align="left"><b><%= l(:label_total)%></b></td>
+			<td align="center"><b><%= ("%.2f" % version.estimated_hours)%></b></td>
+			<td align="center"><b><%= ("%.2f" % version.spent_hours)%></b></td>
+			<td align="center"><b><%= ("%.0f" % version.completed_pourcent)%>%</b></td>
+			<td align="center"><b><%= ("%.2f" % version.rest_hours)%></b></td>
+        </tr>
+	</tbody>
+</table>
+</fieldset>
+<% end %>
+<% end %>
+
