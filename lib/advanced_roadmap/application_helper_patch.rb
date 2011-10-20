@@ -4,7 +4,11 @@ module AdvancedRoadmap
   module ApplicationHelperPatch
     def self.included(base)
       base.class_eval do
-  
+
+        def link_to_milestone(milestone)
+          return(link_to(milestone.name, {:controller => :milestones, :action => :show, :id => milestone.id}))
+        end
+
         def color_by_ratio(ratio)
           color = ""
           color = Setting.plugin_advanced_roadmap["color_good"] if ratio <= Setting.plugin_advanced_roadmap["ratio_good"].to_f
