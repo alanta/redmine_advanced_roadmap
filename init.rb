@@ -16,14 +16,15 @@ Dispatcher.to_prepare do
   end
 
   ApplicationHelper.send(:include, AdvancedRoadmap::ApplicationHelperPatch)
+  CalendarsController.send(:include, AdvancedRoadmap::CalendarsControllerPatch)
   Issue.send(:include, AdvancedRoadmap::IssuePatch)
   IssuesController.send(:include, AdvancedRoadmap::IssuesControllerPatch)
   Project.send(:include, AdvancedRoadmap::ProjectPatch)
   ProjectsHelper.send(:include, AdvancedRoadmap::ProjectsHelperPatch)
+  Redmine::Helpers::Gantt.send(:include, AdvancedRoadmap::RedmineHelpersGanttPatch)
   Redmine::I18n.send(:include, AdvancedRoadmap::RedmineI18nPatch)
   Version.send(:include, AdvancedRoadmap::VersionPatch)
   VersionsController.send(:include, AdvancedRoadmap::VersionsControllerPatch)
-  Redmine::Helpers::Gantt.send(:include, AdvancedRoadmap::RedmineHelpersGanttPatch)
 end
 
 require_dependency "advanced_roadmap/view_hooks"

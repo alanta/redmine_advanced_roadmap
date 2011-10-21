@@ -5,6 +5,10 @@ module AdvancedRoadmap
     def self.included(base)
       base.class_eval do
 
+        def url_for_milestone(milestone_id)
+          return(url_for(:controller => :milestones, :action => :show, :id => milestone_id))
+        end
+
         def link_to_milestone(milestone)
           return(link_to(milestone.name, {:controller => :milestones, :action => :show, :id => milestone.id}))
         end
