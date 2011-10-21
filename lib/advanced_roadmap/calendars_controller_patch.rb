@@ -14,12 +14,17 @@ module AdvancedRoadmap
             include ApplicationHelper
           end
           milestones = []
-          Milestone.find(:all, :conditions => ["effective_date BETWEEN ? AND ?", @calendar.startdt, @calendar.enddt]).each do |milestone|
+          @query.milestones(:conditions => ["effective_date BETWEEN ? AND ?",
+                                            @calendar.startdt,
+                                            @calendar.enddt]).each do |milestone|
             milestones << {:name => milestone.name,
-                           :url => url_for(:controller => :milestones, :action => :show, :id => milestone.id),
+                           :url => url_for(:controller => :milestones,
+                                           :action => :show,
+                                           :id => milestone.id),
                            :day => milestone.effective_date.day}
           end
-          response.body += view.render(:partial => "hooks/calendars/milestones", :locals => {:milestones => milestones})
+          response.body += view.render(:partial => "hooks/calendars/milestones",
+                                       :locals => {:milestones => milestones})
         end
 
       end

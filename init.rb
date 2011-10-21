@@ -21,6 +21,7 @@ Dispatcher.to_prepare do
   IssuesController.send(:include, AdvancedRoadmap::IssuesControllerPatch)
   Project.send(:include, AdvancedRoadmap::ProjectPatch)
   ProjectsHelper.send(:include, AdvancedRoadmap::ProjectsHelperPatch)
+  Query.send(:include, AdvancedRoadmap::QueryPatch)
   Redmine::Helpers::Gantt.send(:include, AdvancedRoadmap::RedmineHelpersGanttPatch)
   Redmine::I18n.send(:include, AdvancedRoadmap::RedmineI18nPatch)
   Version.send(:include, AdvancedRoadmap::VersionPatch)
