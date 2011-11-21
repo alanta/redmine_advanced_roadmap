@@ -1,5 +1,3 @@
-require "advanced_roadmap/gruff/pie"
-
 class MilestonesController < ApplicationController
   
   menu_item :roadmap
