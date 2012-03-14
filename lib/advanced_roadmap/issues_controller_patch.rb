@@ -13,7 +13,7 @@ module AdvancedRoadmap
             @journals.each do |journal|
               journal.details.delete_if{|detail| detail.prop_key == "estimated_hours"}
             end
-            @journals.delete_if{|journal| journal.details.empty?}
+            #@journals.delete_if{|journal| journal.details.empty?}
           end
           super(options, extra_options)
         end
